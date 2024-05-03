@@ -36,3 +36,6 @@
 2. Demander à un enseignant de vous ajouter dans l'organisation **ENSG-POO-2024**
 3. *Forker* (copier) le projet **projetPokemon** et choisissez un nom très personnalisé !
 4. Pour voir comment établir une connexion ssh entre votre ordinateur et github, voir documents/sshConnexion.md
+
+
+test vsc
