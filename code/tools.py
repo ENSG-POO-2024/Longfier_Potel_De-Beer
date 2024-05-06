@@ -41,9 +41,12 @@ data_array[0,2] = 'Coordonnees en Y'
 
 
 tableau_travail = data_array[1:,1:].astype(float)
-tableau_travail[:,0] = np.ceil(tableau_travail[:,0] * 1000)
-tableau_travail[:,1] = np.ceil(tableau_travail[:,1] * 1000)
+tableau_travail[:,0] = np.ceil(tableau_travail[:,0] * 100)
+tableau_travail[:,1] = np.ceil(tableau_travail[:,1] * 100)
+tableau_travail = tableau_travail.astype(int)
 
+
+"""
 '''
 J'ai importé le tableau des stats, il est utilisable tel quel, mais je me garde la
 possibilité de le modifier + tard si nécessaire
@@ -94,14 +97,16 @@ Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmand
 
 
 
-
+"""
 
 if __name__ == '__main__':
     pass
 #    #Travail sur le tableau pokemon_coordinates
-#    plt.figure('Affichage pkmn')
-#    plt.plot(data_array[1:,1].astype(float),data_array[1:,2].astype(float), '+')
-#    plt.title('Répartition Pokemon')
+    plt.close()
+    plt.figure('Affichage pkmn')
+    plt.plot(tableau_travail[:,0].astype(float),tableau_travail[:,1].astype(float), '+')
+    plt.title('Répartition Pokemon')
+    plt.show()
 #    
 #    plt.figure('Affichage pkmn * 1000')
 #    plt.plot(tableau_travail[:,0],tableau_travail[:,1], '+')
