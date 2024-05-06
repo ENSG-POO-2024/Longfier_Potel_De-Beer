@@ -27,7 +27,7 @@ tabl_affin = np.array(([0.5, 1, 1, 0.5, 0.5, 0.5, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 
 def dist(p1, p2):
     return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
     
-class Pokemon:
+class PokemonSauvage:
     
     def __init__(self, coord, typ, nb_vies, déf, att, sauv):
         self.coord = coord
