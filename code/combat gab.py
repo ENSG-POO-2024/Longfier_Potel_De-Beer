@@ -45,6 +45,9 @@ class Pokemon():
         self.speed =        (((self.IV[5] + 2 * int(self.stats[5]) + (np.floor(EV / 4))) * (level/ 100)) + 5) * self.nature
         self.pointsdevieTOT = pointsdevie
         
+    def afficher_nom(Pokemon):
+        return Pokemon.nom
+        
     def subir_degats(self, degats):
         #degats négatifs = heal
         self.pointsdevie = self.pointsdevie - degats
@@ -53,11 +56,20 @@ class Equipe(Pokemon):
     def __init__(self,equipe):
         self.equipe = equipe
         self.mainpokemon = equipe[0]
-    
-
+        self.noms = [self.equipe[i].nom for i in range(len(self.equipe))]
         
     def changement_pokemon(self, changeur):
         self.mainpokemon = changeur
         
+    def pokemon_KO(self):
+        self.mainpokemon.pointsdevie = 0
+        print('Votre pokémon', self.mainpokemon.nom,'est KO')
+        print('Changez de pokémon !')
+        print('Vos pokémons disponibles :', self.noms)
+        numero = input('Quel pokemon voulez-vous envoyer au combat ? ')
+        for i in range(len(self.equipe)):
+            if self.equipe[i].nom == input:
+                self.mainpokemon = self.equipe[i]
         
     
+equipetropcool = Equipe((Pokemon('Charmander'), Pokemon('Eevee'), Pokemon('Zapdos')))
