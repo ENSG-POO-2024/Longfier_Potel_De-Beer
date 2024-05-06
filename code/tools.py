@@ -9,7 +9,6 @@ import numpy as np
 import csv
 import ast
 import matplotlib.pyplot as plt
-import os
 
 #np.loadtxt('../data/pokemon_coordinates.csv', skiprows = 1)
 
@@ -62,9 +61,7 @@ for i in range(data_stats_array.shape[0]):
     # for j in range(6):
         # stats.append(float(data_stats_array[i,5+j]))
     stats =data_stats_array[:,5:11].tolist()
-    
     liste_stats.append([str(data_stats_array[i,1]), str(data_stats_array[i,2]), str(data_stats_array[i,3]), stats[i]])
-    print(liste_stats)
     liste_stats_array = np.array( liste_stats)
 
 Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmander' : 4, 'Charmeleon' : 5, 'Charizard' : 6,
