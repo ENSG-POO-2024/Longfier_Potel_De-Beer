@@ -26,7 +26,8 @@ def creationIVs():
 #Je définis EV = 85 parce que le max est 510 donc je répartis 85 par stats, inutile de faire une liste où j'écris 6 fois 85
 #Je définis nature au cas où, cf https://www.pokebip.com/page/general/statistiques
 #Pour les dégats : https://www.pokebip.com/page/jeuxvideo/guide_tactique_strategie_pokemon/formules_mathematiques
-    
+#Pour les captures : https://www.pokebip.com/page/jeuxvideo/rbvj/chances_capture
+#Pour les attaque : https://www.pokepedia.fr/Liste_des_capacit%C3%A9s#OA
 class Pokemon():
     def __init__(self, nom, level = 50, EV = 85, nature = 1):
         self.nom = nom
@@ -45,19 +46,61 @@ class Pokemon():
         self.speed =        (((self.IV[5] + 2 * int(self.stats[5]) + (np.floor(EV / 4))) * (level/ 100)) + 5) * self.nature
         self.pointsdevieTOT = pointsdevie
         
+        
+        
     def subir_degats(self, degats):
         #degats négatifs = heal
         self.pointsdevie = self.pointsdevie - degats
 
-class Equipe(Pokemon):
-    def __init__(self,equipe):
-        self.equipe = equipe
-        self.mainpokemon = equipe[0]
-    
+class Combat(Pokemon):
+    def __init__(self, equipe1, equipe2):
+        self.equipe1 = equipe1
+        self.mainpokemon1 = equipe1[0]
+        self.equipe2 = equipe2
+        self.mainpokemon2 = equipe2[0]
 
         
     def changement_pokemon(self, changeur):
         self.mainpokemon = changeur
         
+    def pokemon_KO(self):
+        pkmndispo = []
+        for i in range(len(self.equipe)):
+            if self.equipe[i].pointsdevie != 0:
+                pkmndispo.append(self.equipe[i].nom)
+        if pkmndispo == []:
+            print("Vous n'avez plus de Pokémon en état de se battre. Vous êtes nul !")
+        elif self.mainpokemon.pointsdevie == 0:
+            print("Votre pokémon n'est plus en état de se battre.")
+            print("Choisissez un pokémon parmi vos pokemons disponibles : ")
+            booleen = False
+            while booleen == False:
+                print(pkmndispo)
+                choix = input('Nom du pokémon choisi : ')
+                if choix == 'stop':
+                    booleen = True
+                for i in range(len(self.equipe)):
+                    if str(self.equipe[i].nom) == choix:
+                        self.mainpokemon = self.equipe[i]
+                        booleen = True
+
+    def
         
+
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+if __name__ == '__main__':
+    equipecool = Combat((Pokemon('Charmander'), Pokemon('Squirtle'), Pokemon('Mewtwo')),(Pokemon('Caterpie'), Pokemon('Kakuna'), Pokemon('Articuno')))
