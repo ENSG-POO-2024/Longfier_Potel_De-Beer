@@ -46,7 +46,6 @@ tableau_travail[:,1] = np.ceil(tableau_travail[:,1] * 100)
 tableau_travail = tableau_travail.astype(int)
 
 
-"""
 '''
 J'ai importé le tableau des stats, il est utilisable tel quel, mais je me garde la
 possibilité de le modifier + tard si nécessaire
@@ -97,7 +96,6 @@ Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmand
 
 
 
-"""
 
 if __name__ == '__main__':
     pass

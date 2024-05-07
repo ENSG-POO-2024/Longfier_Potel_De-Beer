@@ -62,10 +62,13 @@ class Carte(QWidget):
         )
 
     def start_game(self):
-        equipe = [Pokemon('Bulbasaur'), Pokemon('Charmander'), Pokemon('Squirtle')]
-        player = joueur.Joueur([taille_map / 2, taille_map / 2], equipe)
+        try:
+            #equipe = [Pokemon('Bulbasaur'), Pokemon('Charmander'), Pokemon('Squirtle')]
+            #player = joueur.Joueur([taille_map / 2, taille_map / 2], equipe)
+            self.start_button.hide()
 
-        self.start_button.hide()
+
+
 
     def paintMap(self):
         pass
