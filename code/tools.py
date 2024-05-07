@@ -56,7 +56,7 @@ with open('../data\pokemon_first_gen.csv', 'r') as f:
     data = list(reader)
 data_stats_array = np.array(data)
 data_stats_array[data_stats_array == ''] = None  #Affecte le type 2 None quand il n'y en a pas
-"""
+
 liste_stats = [] # np.zeros((data_stats_array.shape[0],2))
 for i in range(data_stats_array.shape[0]):
     stats = ()
@@ -94,7 +94,7 @@ Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmand
                        'Zapdos' : 145, 'Moltres' : 146, 'Dratini' : 147, 'Dragonair' : 148, 'Dragonite' : 149, 'Mewtwo' : 150,
                        'Mew' : 151}
 
-"""
+
 def creaMap() :
     # Creation de la map
     taille_map = int(np.max(tableau_travail)) + 1
