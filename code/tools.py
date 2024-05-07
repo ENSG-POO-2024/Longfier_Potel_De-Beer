@@ -9,6 +9,7 @@ import numpy as np
 import csv
 import ast
 import matplotlib.pyplot as plt
+import random as rd
 
 #np.loadtxt('../data/pokemon_coordinates.csv', skiprows = 1)
 
@@ -64,7 +65,7 @@ for i in range(data_stats_array.shape[0]):
         # stats.append(float(data_stats_array[i,5+j]))
     stats = data_stats_array[:,5:11].tolist()
     liste_stats.append([str(data_stats_array[i,1]), str(data_stats_array[i,2]), str(data_stats_array[i,3]), tuple(stats[i])])
-    liste_stats_array = np.array( liste_stats)
+    liste_stats_array = np.array( liste_stats, dtype=object)
 
 
 Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmander' : 4, 'Charmeleon' : 5, 'Charizard' : 6,
@@ -105,16 +106,31 @@ def creaMap() :
     map = np.zeros([taille_map, taille_map]).astype(str)
 
     for i in range(len(tableau_travail)):
-        map[tableau_travail[i, 0], tableau_travail[i, 1]] = data_array[i + 1, 0]
+
 
         #Génération de hautes herbes aléatoires
+        for j in range(3) :
+            if tableau_travail[i,0]+j < taille_map :
+                for k in range(3) :
+                    if tableau_travail[i,1]+k < taille_map:
+                        if rd.random() < 0.5 :
+                            map[tableau_travail[i,0]+j,tableau_travail[i,1]+k] = data_array[i+1,0]
+
+        map[tableau_travail[i, 0], tableau_travail[i, 1]] = data_array[i + 1, 0]
+
+    return map
 
 
+mapToSprite = {'0' : 'ressources/ground_grass.png',
+               '1' : 'ressources/tree.png'
+               'g'
+               }
 
 
 
 if __name__ == '__main__':
-    pass
+    carte = creaMap()
+
 #    #Travail sur le tableau pokemon_coordinates
     # plt.close()
     # plt.figure('Affichage pkmn')
