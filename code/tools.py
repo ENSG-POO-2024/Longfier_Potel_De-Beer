@@ -106,13 +106,13 @@ def creaMap() :
 
     for i in range(len(tableau_travail)):
 
-        #Génération de hautes herbes aléatoires
-        for j in range(3) :
-            if tableau_travail[i,0]+j < taille_map :
-                for k in range(3) :
-                    if tableau_travail[i,1]+k < taille_map:
-                        if rd.random() < 0.5 :
-                            map[tableau_travail[i,0]+j,tableau_travail[i,1]+k] = data_array[i+1,0]
+        # Génération de hautes herbes aléatoires
+        for j in range(3):
+            if tableau_travail[i, 0] + j < taille_map:
+                for k in range(3):
+                    if tableau_travail[i, 1] + k < taille_map:
+                        if rd.random() < 0.5:
+                            map[tableau_travail[i, 0] + j, tableau_travail[i, 1] + k] = data_array[i + 1, 0]
 
         map[tableau_travail[i, 0], tableau_travail[i, 1]] = data_array[i + 1, 0]
     return map
