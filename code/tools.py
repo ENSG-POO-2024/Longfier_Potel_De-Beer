@@ -62,9 +62,10 @@ for i in range(data_stats_array.shape[0]):
     stats = ()
     # for j in range(6):
         # stats.append(float(data_stats_array[i,5+j]))
-    stats =data_stats_array[:,5:11].tolist()
-    liste_stats.append([str(data_stats_array[i,1]), str(data_stats_array[i,2]), str(data_stats_array[i,3]), stats[i]])
+    stats = data_stats_array[:,5:11].tolist()
+    liste_stats.append([str(data_stats_array[i,1]), str(data_stats_array[i,2]), str(data_stats_array[i,3]), tuple(stats[i])])
     liste_stats_array = np.array( liste_stats)
+
 
 Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmander' : 4, 'Charmeleon' : 5, 'Charizard' : 6,
                        'Squirtle' : 7, 'Wartortle' : 8, 'Blastoise' : 9, 'Caterpie' : 10, 'Metapod' : 11, 'butterfree' : 12,
@@ -115,11 +116,11 @@ def creaMap() :
 if __name__ == '__main__':
     pass
 #    #Travail sur le tableau pokemon_coordinates
-    plt.close()
-    plt.figure('Affichage pkmn')
-    plt.plot(tableau_travail[:,0].astype(float),tableau_travail[:,1].astype(float), '+')
-    plt.title('Répartition Pokemon')
-    plt.show()
+    # plt.close()
+    # plt.figure('Affichage pkmn')
+    # plt.plot(tableau_travail[:,0].astype(float),tableau_travail[:,1].astype(float), '+')
+    # plt.title('Répartition Pokemon')
+    # plt.show()
 #    
 #    plt.figure('Affichage pkmn * 1000')
 #    plt.plot(tableau_travail[:,0],tableau_travail[:,1], '+')
