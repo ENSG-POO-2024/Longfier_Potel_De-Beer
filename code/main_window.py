@@ -4,46 +4,57 @@ from combat_gab import *
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5.QtCore import *
 import random as rd
 import numpy as np
+import echap_window
+import combat_window
 
 
 
-class Carte(QWidget):
+class Main_window(QWidget):
     def __init__(self):
         super().__init__()
 
-        self.coord = [rd.randint(1000,3000), rd.randint(1000,3000)]
-        self.coord = tableau_travail[1]
+
         self.cam_size = 14
         self.pixel_number = 64
         self.taille_map = int(np.max(tableau_travail)) + 1
-
+        self.coord = [rd.randint(int(self.taille_map/3),int(self.taille_map*2/3)), rd.randint(int(self.taille_map/3),int(self.taille_map*2/3))]
+        self.coord = tableau_travail[1]
 
         #Création de la fenêtre principale
         self.setGeometry(300, 100, 900, 900)
-        self.setWindowTitle('Pokemon mais en plus gèze')
+        self.setObjectName('Pokemon mais en plus gèze')
+
 
         #Changement de l'icone de l'app
-        self.icone = QIcon('ressources/pokeball_icone.png')
-        self.setWindowIcon(self.icone)
+        self.icon = QIcon('ressources/pokeball_icone.png')
+        self.setWindowIcon(self.icon)
 
         #Initialisation du fond
         self.state = 'start_screen'
         self.background = QPixmap('ressources/Background.png').scaledToHeight(self.height())
 
-        '''
-        # Initialisation du layout
-        self.temp = QHBoxLayout()
-        self.label_temp = QLabel('oui')
-        self.temp.addWidget(self.label_temp)
+        # Creation de fenêtres annexes
+        self.Ui_combat_window = QMainWindow()
+        self.Ui_combat = combat_window.Ui_combat_window()
+        self.Ui_combat.setupUi(self.Ui_combat_window)
+
+        self.Ui_echap_window = QMainWindow()
+        self.Ui_echap = echap_window.Ui_echap_window()
+        self.Ui_echap.setupUi(self.Ui_echap_window)
+
+        self.Ui_echap.resume_button.clicked.connect(self.close_echap)
+        self.Ui_echap.quit_button.clicked.connect(QApplication.quit)
+
+        #Initialisation de certaines données pour eviter les erreurs
+        self.player = joueur.Joueur(self.coord, [],None)
+        self.global_map = []
 
 
-        self.layout_verti = QVBoxLayout(self)
-        self.layout_verti.addLayout(self.temp)
 
-        print(self.layout_verti.itemAt(0))
-        '''
+        #Démarrage
         self.startScreen()
 
     def paintEvent(self, event):
@@ -94,15 +105,21 @@ class Carte(QWidget):
                     x_cam = x_min_cam + i
                     y_cam = y_min_cam + j
 
-                    print(self.global_map[x_cam, y_cam])
-                    if self.global_map[x_cam, y_cam] == 'Tree' and self.global_map[x_cam, y_cam - 1] == '0.0':
+                    if self.global_map[x_cam, y_cam] in Nom_Indices_Pokemon.keys() :
+                        painter.drawPixmap(x_draw, y_draw, QPixmap(mapToSprite['Tall_grass']))
+
+                    if x_min_draw + (self.cam_size//2) * self.pixel_number == x_draw and y_min_draw + (self.cam_size//2) * self.pixel_number == y_draw :
+                        painter.drawPixmap(x_min_draw + (self.cam_size // 2) * self.pixel_number,
+                                           y_min_draw + (self.cam_size // 2) * self.pixel_number,
+                                           QPixmap('ressources/water3.png'))
+
+                    if self.global_map[x_cam, y_cam] == 'Tree':
                         painter.drawPixmap(x_draw, y_draw, QPixmap(mapToSprite['Tree']))
 
 
 
-                    elif self.global_map[x_cam, y_cam] in Nom_Indices_Pokemon.keys() :
-                        print('POKEMON')
-                        painter.drawPixmap(x_draw, y_draw, QPixmap(mapToSprite['Tall_grass']))
+
+
 
 
 
@@ -128,58 +145,58 @@ class Carte(QWidget):
     def start_game(self):
 
         equipe = [Pokemon('Bulbasaur'), Pokemon('Charmander'), Pokemon('Squirtle')]
-        player = joueur.Joueur([self.coord], equipe)
         self.start_button.hide()
         self.global_map = creaMap()
+        self.player.map = self.global_map
+        self.player.equipe = equipe
         self.state = 'game_screen'
         self.update()
 
 
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Escape:
+            self.open_echap()
 
 
+        if self.state == 'game_screen' :
+            if event.key() == Qt.Key_Q :
+                self.player.depl(np.array([-1,0]))
+            if event.key() == Qt.Key_D:
+                self.player.depl(np.array([1,0]))
+            if event.key() == Qt.Key_Z:
+                self.player.depl(np.array([0,-1]))
+            if event.key() == Qt.Key_S:
+                self.player.depl(np.array([0,1]))
+            self.coord = self.player.coord
+            self.update()
+            self.check_poke()
+
+
+    def check_poke(self):
+        bloc = self.global_map[self.coord[0], self.coord[1]]
+        if bloc in Nom_Indices_Pokemon.keys():
+            if rd.random() < Rarete_Pokemon[bloc] :
+                pass
+                #combat_poke(player.equipe,bloc)
+        pass
+
+    def close_echap(self):
+        self.Ui_echap_window.hide()
+        if self.state == 'combat_screen' :
+            self.Ui_combat_window.show()
+
+
+    def open_echap(self):
+        self.Ui_echap_window.show()
+        if self.state == 'combat_screen':
+            self.Ui_combat_window.hide()
+        else :
+            pass
 
 if __name__ == '__main__':
 
     app = QApplication(sys.argv)
-    widget = Carte()
+    widget = Main_window()
     widget.show()
     sys.exit(app.exec_())
 
-
-'''
-# Effacez le contenu précédent du layout_verti uniquement si nécessaire
-            if self.layout_verti.count() > 0:
-                for i in reversed(range(self.layout_verti.count())):
-                    layout_to_remove = self.layout_verti.itemAt(i)
-                    for j in reversed(range(layout_to_remove.count())):
-                        widget = layout_to_remove.itemAt(j).widget()
-                        layout_to_remove.removeWidget(widget)
-                        widget.setParent(None)
-                    self.layout_verti.removeItem(layout_to_remove)
-
-            for i in range(x_min, x_max):
-                layout_horiz = QHBoxLayout()
-                for j in range(y_min, y_max):
-                    pixmap = self.dessinPixmap(self.global_map[i, j])
-                    if pixmap:
-                        label = QLabel()
-                        label.setPixmap(pixmap)
-                        layout_horiz.addWidget(label)
-                self.layout_verti.addLayout(layout_horiz)
-
-        def dessinPixmap(self,valeur):
-
-            if valeur == '0.0' :
-                print('pixmap')
-                pixmap = QPixmap(64,64)
-                pixmap.fill(QColor(166,247,64))
-                texture = QPixmap( mapToSprite['0'])
-                painter = QPainter(pixmap)
-                painter.drawPixmap(0,0,texture)
-                painter.end()
-
-                return pixmap
-                
-            else :
-                return None
-'''

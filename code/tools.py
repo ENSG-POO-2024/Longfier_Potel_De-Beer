@@ -42,8 +42,8 @@ data_array[0,2] = 'Coordonnees en Y'
 
 
 tableau_travail = data_array[1:,1:].astype(float)
-tableau_travail[:,0] = np.ceil(tableau_travail[:,0] * 100)
-tableau_travail[:,1] = np.ceil(tableau_travail[:,1] * 100)
+tableau_travail[:,0] = np.ceil(tableau_travail[:,0] * 50)
+tableau_travail[:,1] = np.ceil(tableau_travail[:,1] * 50)
 tableau_travail = tableau_travail.astype(int)
 
 
@@ -105,13 +105,6 @@ def creaMap() :
     # Nom de pokemon : hautes herbes où spawn le pokémon
     map = np.zeros([taille_map, taille_map]).astype(str)
 
-    #Génération de blocs durs
-    for i in range(taille_map):
-        for j in range(taille_map - 1):
-            if rd.random() < 0.08 :
-                map[i,j] = 'Tree'
-
-
     for i in range(len(tableau_travail)):
 
         # Génération de hautes herbes aléatoires
@@ -123,6 +116,15 @@ def creaMap() :
                             map[tableau_travail[i, 0] + j, tableau_travail[i, 1] + k] = data_array[i + 1, 0]
 
         map[tableau_travail[i, 0], tableau_travail[i, 1]] = data_array[i + 1, 0]
+
+    #Génération de blocs durs
+    for i in range(taille_map):
+        for j in range(taille_map - 1):
+            if rd.random() < 0.08 and map[i,j + 1] == '0.0':
+                map[i,j] = 'Tree'
+
+
+
     return map
 
 

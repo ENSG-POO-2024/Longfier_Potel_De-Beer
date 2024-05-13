@@ -1,5 +1,6 @@
 from math import sqrt
 import numpy as np
+from tools import *
 
 dict_typs = {'Acier' : 1, 'Combat' : 2, 'Dragon' : 3, 'Eau' : 4, 'Electrik' : 5, 'Feu' : 6, 'Fée' : 7, 'Glace' : 8, 'Insecte' : 9, 
              'Normal' : 10, 'Plante' : 11, 'Poison' : 12, 'Psy' : 13, 'Roche' : 14, 'Sol' : 15, 'Spectre' : 16, 'Ténèbre' : 17, 
@@ -44,17 +45,21 @@ class PokemonSauvage:
 
 class Joueur:
     
-    def __init__(self, coord, equipe):
+    def __init__(self, coord, equipe, map):
         self.coord = coord
         self.equipe = equipe
+        self.map = map
         
     def depl(self, direct):
-        self.coord[0] += direct[0]
-        self.coord[1] += direct[1]
+        new_coord = self.coord + direct
+        if self.map[new_coord[0],new_coord[1] - 1] != 'Tree':
+            self.coord[0] += direct[0]
+            self.coord[1] += direct[1]
         
-
+    def change_equipe(self,equipe):
+        self.equipe = equipe
 
 
 
 if __name__ == '__main__' :
-    print(tabl_affin)
+    pass

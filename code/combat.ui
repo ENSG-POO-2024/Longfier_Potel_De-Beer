@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>combat_window</class>
+ <widget class="QWidget" name="combat_window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1100</width>
+    <height>834</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Combat</string>
+  </property>
+  <widget class="QPushButton" name="attack_button">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>510</y>
+     <width>300</width>
+     <height>120</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>ATTAQUE</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="run_button">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>650</y>
+     <width>300</width>
+     <height>120</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>FUITE</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="bag_button">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>650</y>
+     <width>300</width>
+     <height>120</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>SAC</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pokemon_button">
+   <property name="geometry">
+    <rect>
+     <x>600</x>
+     <y>510</y>
+     <width>300</width>
+     <height>120</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>POKEMON</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
