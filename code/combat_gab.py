@@ -84,7 +84,7 @@ class Combat(Pokemon):
                         self.mainpokemon = self.equipe[i]
                         booleen = True
 
-    def
+
         
 
     

@@ -9,6 +9,7 @@ import numpy as np
 import csv
 import ast
 import matplotlib.pyplot as plt
+import random as rd
 
 #np.loadtxt('../data/pokemon_coordinates.csv', skiprows = 1)
 
@@ -64,7 +65,7 @@ for i in range(data_stats_array.shape[0]):
         # stats.append(float(data_stats_array[i,5+j]))
     stats = data_stats_array[:,5:11].tolist()
     liste_stats.append([str(data_stats_array[i,1]), str(data_stats_array[i,2]), str(data_stats_array[i,3]), tuple(stats[i])])
-    liste_stats_array = np.array( liste_stats)
+    liste_stats_array = np.array( liste_stats , dtype = object )
 
 
 Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmander' : 4, 'Charmeleon' : 5, 'Charizard' : 6,
@@ -99,10 +100,17 @@ def creaMap() :
     # Creation de la map
     taille_map = int(np.max(tableau_travail)) + 1
 
-    # 0 : bloc de déplacement libre
-    # 1 : blocs solides
-    # nom de pokemon : hautes herbes où spawn le pokémon
+    # 0 : Bloc de deplacement libre (herbe)
+    # Nom de bloc 'dur' : bloc sans déplacement
+    # Nom de pokemon : hautes herbes où spawn le pokémon
     map = np.zeros([taille_map, taille_map]).astype(str)
+
+    #Génération de blocs durs
+    for i in range(taille_map):
+        for j in range(taille_map - 1):
+            if rd.random() < 0.08 :
+                map[i,j] = 'Tree'
+
 
     for i in range(len(tableau_travail)):
 
@@ -160,15 +168,14 @@ Rarete_Pokemon = {'Bulbasaur' : Taux_rencontre['Starter'], 'Ivysaur' : Taux_renc
 
 
 mapToSprite = {'0' : 'ressources/ground_grass.png',
-               '1' : 'ressources/tree.png'
-               'g'
-               }
+               'Tree' : 'ressources/tree2.png',
+               'Tall_grass':'ressources/tall_grass_ground_64.png'}
 
 
 
 if __name__ == '__main__':
     pass
-#    #Travail sur le tableau pokemon_coordinates
+    #Travail sur le tableau pokemon_coordinates
     # plt.close()
     # plt.figure('Affichage pkmn')
     # plt.plot(tableau_travail[:,0].astype(float),tableau_travail[:,1].astype(float), '+')
