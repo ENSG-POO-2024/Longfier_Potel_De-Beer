@@ -189,7 +189,7 @@ mapToSprite = {'0' : 'ressources/ground_grass.png',
 
 
 if __name__ == '__main__':
-    print(legendary)
+    pass
     #Travail sur le tableau pokemon_coordinates
     # plt.close()
     # plt.figure('Affichage pkmn')

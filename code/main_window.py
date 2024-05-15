@@ -153,7 +153,6 @@ class Main_window(QWidget):
         )
 
     def start_game(self):
-
         equipe = [Pokemon('Bulbasaur'), Pokemon('Charmander'), Pokemon('Squirtle')]
         self.start_button.hide()
         self.global_map = creaMap()
@@ -206,13 +205,15 @@ class Main_window(QWidget):
         self.Ui_combat.poke_switch_1.setText(self.player.equipe[0].nom)
         self.Ui_combat.poke_switch_2.setText(self.player.equipe[1].nom)
         self.Ui_combat.poke_switch_3.setText(self.player.equipe[2].nom)
+
         #Début avec 3 pokémons
-        if len(self.player.equipe) >= 4 :
-            self.poke_switch_4.Ui_combat.setText(self.player.equipe[3].nom)
+        if len(self.player.equipe) >= 4:
+            print(self.player.equipe[3].nom)
+            self.Ui_combat.poke_switch_4.setText(self.player.equipe[3].nom)
         if len(self.player.equipe) >= 5:
-            self.poke_switch_5.Ui_combat.setText(self.player.equipe[4].nom)
-        if len(self.player.equipe) ==6 :
-            self.poke_switch_6.Ui_combat.setText(self.player.equipe[5].nom)
+            self.Ui_combat.poke_switch_5.setText(self.player.equipe[4].nom)
+        if len(self.player.equipe) ==6:
+            self.Ui_combat.poke_switch_6.setText(self.player.equipe[5].nom)
 
         self.Ui_combat.poke_switch_1.pressed.connect(self.switch_poke_1)
         self.Ui_combat.poke_switch_2.pressed.connect(self.switch_poke_2)
@@ -220,7 +221,6 @@ class Main_window(QWidget):
         self.Ui_combat.poke_switch_4.pressed.connect(self.switch_poke_4)
         self.Ui_combat.poke_switch_5.pressed.connect(self.switch_poke_5)
         self.Ui_combat.poke_switch_6.pressed.connect(self.switch_poke_6)
-
 
 
     def switch_poke_1(self):
