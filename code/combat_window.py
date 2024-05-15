@@ -10,7 +10,6 @@ import sys
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_combat_window(object):
     def setupUi(self, combat_window):
         combat_window.setObjectName("combat_window")
@@ -79,6 +78,12 @@ class Ui_combat_window(object):
         self.poke_exit_button.hide()
 
 
+        self.attack_button.pressed.connect(self.combat_pressed)
+        self.att_exit_button.pressed.connect(self.retour_pressed)
+        self.poke_exit_button.pressed.connect(self.retour_pressed)
+        self.pokemon_button.pressed.connect(self.poke_pressed)
+
+
         self.retranslateUi(combat_window)
         QtCore.QMetaObject.connectSlotsByName(combat_window)
 
@@ -99,6 +104,54 @@ class Ui_combat_window(object):
         self.poke_switch_5.setText(_translate("combat_window", "Pokemon 5"))
         self.poke_switch_6.setText(_translate("combat_window", "Pokemon 6"))
         self.poke_exit_button.setText(_translate("combat_window","Retour"))
+
+
+    def combat_pressed(self):
+        self.attack_button.hide()
+        self.run_button.hide()
+        self.bag_button.hide()
+        self.pokemon_button.hide()
+
+        self.att_normal_button.show()
+        self.att_spe_button.show()
+        self.att_exit_button.show()
+
+    def poke_pressed(self):
+        self.attack_button.hide()
+        self.run_button.hide()
+        self.bag_button.hide()
+        self.pokemon_button.hide()
+
+        self.poke_switch_1.show()
+        self.poke_switch_2.show()
+        self.poke_switch_3.show()
+        self.poke_switch_4.show()
+        self.poke_switch_5.show()
+        self.poke_switch_6.show()
+        self.poke_exit_button.show()
+
+    def retour_pressed(self):
+        self.attack_button.show()
+        self.run_button.show()
+        self.bag_button.show()
+        self.pokemon_button.show()
+
+        self.att_normal_button.hide()
+        self.att_spe_button.hide()
+        self.att_exit_button.hide()
+        self.poke_switch_1.hide()
+        self.poke_switch_2.hide()
+        self.poke_switch_3.hide()
+        self.poke_switch_4.hide()
+        self.poke_switch_5.hide()
+        self.poke_switch_6.hide()
+        self.poke_exit_button.hide()
+
+    def closeEvent(self,event) :
+        print("fermée")
+        event.ignore()
+
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

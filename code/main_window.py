@@ -21,7 +21,7 @@ class Main_window(QWidget):
         self.pixel_number = 64
         self.taille_map = int(np.max(tableau_travail)) + 1
         self.coord = [rd.randint(int(self.taille_map/3),int(self.taille_map*2/3)), rd.randint(int(self.taille_map/3),int(self.taille_map*2/3))]
-        self.coord = tableau_travail[1]
+        self.coord = tableau_travail[231]
 
         #Création de la fenêtre principale
         self.setGeometry(300, 100, 900, 900)
@@ -44,6 +44,7 @@ class Main_window(QWidget):
         self.Ui_combat.setupUi(self.Ui_combat_window)
 
         self.Ui_combat.run_button.clicked.connect(self.close_combat)
+
 
         self.Ui_echap_window = QMainWindow()
         self.Ui_echap = echap_window.Ui_echap_window()
@@ -116,11 +117,18 @@ class Main_window(QWidget):
                         painter.drawPixmap(x_min_draw + (self.cam_size // 2) * self.pixel_number,
                                            y_min_draw + (self.cam_size // 2) * self.pixel_number - 34,
                                            QPixmap(mapToSprite['Homme_face']))
+                        print(self.global_map[x_cam,y_cam])
+                    bloc = self.global_map[x_cam, y_cam]
 
-                    if self.global_map[x_cam, y_cam] in Nom_Indices_Pokemon.keys() :
-                        painter.drawPixmap(x_draw, y_draw + 11, QPixmap(mapToSprite['Tall_grass']))
+                    if bloc in Nom_Indices_Pokemon.keys():
+                        if liste_stats_array[Nom_Indices_Pokemon[bloc],-1] == 'False':
+                            painter.drawPixmap(x_draw, y_draw + 11, QPixmap(mapToSprite['Tall_grass']))
+                        else:
+                            painter.drawPixmap(x_draw,y_draw,QPixmap(mapToSprite['Water']))
 
-                    if self.global_map[x_cam, y_cam] == 'Tree':
+
+
+                    if bloc == 'Tree':
                         painter.drawPixmap(x_draw, y_draw, QPixmap(mapToSprite['Tree']))
 
 
@@ -183,21 +191,17 @@ class Main_window(QWidget):
     def close_echap(self):
         self.time = 'flow'
         self.Ui_echap_window.hide()
-        if self.state == 'combat_screen' :
-            self.Ui_combat_window.show()
 
 
     def open_echap(self):
         self.time = 'paused'
         self.Ui_echap_window.show()
-        if self.state == 'combat_screen':
-            self.Ui_combat_window.hide()
-        else :
-            pass
 
     def open_combat(self):
         self.time = 'pause'
         self.Ui_combat_window.show()
+
+
 
 
 
