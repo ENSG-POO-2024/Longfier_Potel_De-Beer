@@ -12,6 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_combat_window(object):
     def setupUi(self, combat_window):
+        self.spe2 = 'False'
+
         combat_window.setObjectName("combat_window")
         combat_window.resize(1100, 834)
         self.attack_button = QtWidgets.QPushButton(combat_window)
@@ -32,10 +34,15 @@ class Ui_combat_window(object):
         self.att_normal_button.setObjectName("Attaque normal bouton")
         self.att_normal_button.hide()
 
-        self.att_spe_button = QtWidgets.QPushButton(combat_window)
-        self.att_spe_button.setGeometry(QtCore.QRect(600, 510, 300, 120))
-        self.att_spe_button.setObjectName("Attaque spéciale bouton")
-        self.att_spe_button.hide()
+        self.att_spe1_button = QtWidgets.QPushButton(combat_window)
+        self.att_spe1_button.setGeometry(QtCore.QRect(600, 510, 300, 120))
+        self.att_spe1_button.setObjectName("Attaque spéciale bouton")
+        self.att_spe1_button.hide()
+
+        self.att_spe2_button = QtWidgets.QPushButton(combat_window)
+        self.att_spe2_button.setGeometry(QtCore.QRect(400, 370, 300, 120))
+        self.att_spe2_button.setObjectName("Attaque spéciale bouton")
+        self.att_spe2_button.hide()
 
         self.att_exit_button = QtWidgets.QPushButton(combat_window)
         self.att_exit_button.setGeometry(QtCore.QRect(400, 650, 300, 120))
@@ -95,7 +102,8 @@ class Ui_combat_window(object):
         self.bag_button.setText(_translate("combat_window", "SAC"))
         self.pokemon_button.setText(_translate("combat_window", "POKEMON"))
         self.att_normal_button.setText(_translate("combat_window","NORMALE"))
-        self.att_spe_button.setText(_translate("combat_window", "SPECIALE"))
+        self.att_spe1_button.setText(_translate("combat_window", "SPECIALE 1"))
+        self.att_spe2_button.setText(_translate("combat_window", "SPECIALE 2"))
         self.att_exit_button.setText(_translate("combat_window", "Retour"))
         self.poke_switch_1.setText(_translate("combat_window", "Pokemon 1"))
         self.poke_switch_2.setText(_translate("combat_window", "Pokemon 2"))
@@ -113,8 +121,10 @@ class Ui_combat_window(object):
         self.pokemon_button.hide()
 
         self.att_normal_button.show()
-        self.att_spe_button.show()
+        self.att_spe1_button.show()
         self.att_exit_button.show()
+        if self.spe2 == 'True' :
+            self.att_spe2_button.show()
 
     def poke_pressed(self):
         self.attack_button.hide()
@@ -137,7 +147,8 @@ class Ui_combat_window(object):
         self.pokemon_button.show()
 
         self.att_normal_button.hide()
-        self.att_spe_button.hide()
+        self.att_spe1_button.hide()
+        self.att_spe2_button.hide()
         self.att_exit_button.hide()
         self.poke_switch_1.hide()
         self.poke_switch_2.hide()

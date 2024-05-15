@@ -64,7 +64,7 @@ class Combat(Pokemon):
 
         
     def changement_pokemon(self, changeur):
-        self.mainpokemon = changeur
+        self.mainpokemon1 = changeur
         
     def pokemon_KO_ami(self):
         pkmndispo = []

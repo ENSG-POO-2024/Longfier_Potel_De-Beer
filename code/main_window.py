@@ -57,6 +57,7 @@ class Main_window(QWidget):
         #Initialisation de certaines données pour eviter les erreurs
         self.player = joueur.Joueur(self.coord, [],None)
         self.global_map = []
+        self.combat = None
 
 
 
@@ -185,7 +186,7 @@ class Main_window(QWidget):
         bloc = self.global_map[self.coord[0], self.coord[1]]
         if bloc in Nom_Indices_Pokemon.keys():
             if rd.random() < Rarete_Pokemon[bloc] :
-                self.open_combat()
+                self.open_combat([bloc])
         pass
 
     def close_echap(self):
@@ -197,12 +198,93 @@ class Main_window(QWidget):
         self.time = 'paused'
         self.Ui_echap_window.show()
 
-    def open_combat(self):
+    def open_combat(self,equipe_ennemie):
         self.time = 'pause'
         self.Ui_combat_window.show()
+        self.combat = Combat(self.player.equipe,equipe_ennemie)
+
+        self.Ui_combat.poke_switch_1.setText(self.player.equipe[0].nom)
+        self.Ui_combat.poke_switch_2.setText(self.player.equipe[1].nom)
+        self.Ui_combat.poke_switch_3.setText(self.player.equipe[2].nom)
+        #Début avec 3 pokémons
+        if len(self.player.equipe) >= 4 :
+            self.poke_switch_4.Ui_combat.setText(self.player.equipe[3].nom)
+        if len(self.player.equipe) >= 5:
+            self.poke_switch_5.Ui_combat.setText(self.player.equipe[4].nom)
+        if len(self.player.equipe) ==6 :
+            self.poke_switch_6.Ui_combat.setText(self.player.equipe[5].nom)
+
+        self.Ui_combat.poke_switch_1.pressed.connect(self.switch_poke_1)
+        self.Ui_combat.poke_switch_2.pressed.connect(self.switch_poke_2)
+        self.Ui_combat.poke_switch_3.pressed.connect(self.switch_poke_3)
+        self.Ui_combat.poke_switch_4.pressed.connect(self.switch_poke_4)
+        self.Ui_combat.poke_switch_5.pressed.connect(self.switch_poke_5)
+        self.Ui_combat.poke_switch_6.pressed.connect(self.switch_poke_6)
 
 
 
+    def switch_poke_1(self):
+        if self.player.equipe[0].pointsdevie > 0 :
+            self.combat.changement_pokemon(self.player.equipe[0])
+            self.Ui_combat.retour_pressed()
+
+            if self.combat.mainpokemon1.type2 != 'None':
+                self.Ui_combat.spe2 = 'True'
+            else:
+                self.Ui_combat.spe2 = 'False'
+
+    def switch_poke_2(self):
+        if self.player.equipe[1].pointsdevie > 0:
+            self.combat.changement_pokemon(self.player.equipe[1])
+            self.Ui_combat.retour_pressed()
+
+            if self.combat.mainpokemon1.type2 != 'None':
+                self.Ui_combat.spe2 = 'True'
+            else:
+                self.Ui_combat.spe2 = 'False'
+
+    def switch_poke_3(self):
+        if self.player.equipe[2].pointsdevie > 0:
+            self.combat.changement_pokemon(self.player.equipe[2])
+            self.Ui_combat.retour_pressed()
+
+            if self.combat.mainpokemon1.type2 != 'None':
+                self.Ui_combat.spe2 = 'True'
+            else:
+                self.Ui_combat.spe2 = 'False'
+
+    def switch_poke_4(self):
+        if len(self.player.equipe) >= 4:
+            if self.player.equipe[3].pointsdevie > 0:
+                self.combat.changement_pokemon(self.player.equipe[3])
+                self.Ui_combat.retour_pressed()
+
+                if self.combat.mainpokemon1.type2 != 'None':
+                    self.Ui_combat.spe2 = 'True'
+                else:
+                    self.Ui_combat.spe2 = 'False'
+
+    def switch_poke_5(self):
+        if len(self.player.equipe) >= 5:
+            if self.player.equipe[4].pointsdevie > 0:
+                self.combat.changement_pokemon(self.player.equipe[4])
+                self.Ui_combat.retour_pressed()
+
+                if self.combat.mainpokemon1.type2 != 'None':
+                    self.Ui_combat.spe2 = 'True'
+                else:
+                    self.Ui_combat.spe2 = 'False'
+
+    def switch_poke_6(self):
+        if len(self.player.equipe) >= 4:
+            if self.player.equipe[5].pointsdevie > 0:
+                self.combat.changement_pokemon(self.player.equipe[5])
+                self.Ui_combat.retour_pressed()
+
+                if self.combat.mainpokemon1.type2 != 'None':
+                    self.Ui_combat.spe2 = 'True'
+                else:
+                    self.Ui_combat.spe2 = 'False'
 
 
 
