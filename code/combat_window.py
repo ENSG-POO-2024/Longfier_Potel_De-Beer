@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import sys
 # Form implementation generated from reading ui file 'D:\Python_code\Longfier_Potel_De-Beer\code\combat.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.10
@@ -28,6 +28,57 @@ class Ui_combat_window(object):
         self.pokemon_button.setGeometry(QtCore.QRect(600, 510, 300, 120))
         self.pokemon_button.setObjectName("pokemon_button")
 
+        self.att_normal_button = QtWidgets.QPushButton(combat_window)
+        self.att_normal_button.setGeometry(QtCore.QRect(200, 510, 300, 120))
+        self.att_normal_button.setObjectName("Attaque normal bouton")
+        self.att_normal_button.hide()
+
+        self.att_spe_button = QtWidgets.QPushButton(combat_window)
+        self.att_spe_button.setGeometry(QtCore.QRect(600, 510, 300, 120))
+        self.att_spe_button.setObjectName("Attaque spéciale bouton")
+        self.att_spe_button.hide()
+
+        self.att_exit_button = QtWidgets.QPushButton(combat_window)
+        self.att_exit_button.setGeometry(QtCore.QRect(400, 650, 300, 120))
+        self.att_exit_button.setObjectName("Retour")
+        self.att_exit_button.hide()
+
+        self.poke_switch_1 = QtWidgets.QPushButton(combat_window)
+        self.poke_switch_1.setGeometry(QtCore.QRect(200, 230, 300, 120))
+        self.poke_switch_1.setObjectName("Pokemon 1")
+        self.poke_switch_1.hide()
+
+        self.poke_switch_2 = QtWidgets.QPushButton(combat_window)
+        self.poke_switch_2.setGeometry(QtCore.QRect(600, 230, 300, 120))
+        self.poke_switch_2.setObjectName("Pokemon 2")
+        self.poke_switch_2.hide()
+
+        self.poke_switch_3 = QtWidgets.QPushButton(combat_window)
+        self.poke_switch_3.setGeometry(QtCore.QRect(200, 370, 300, 120))
+        self.poke_switch_3.setObjectName("Pokemon 3")
+        self.poke_switch_3.hide()
+
+        self.poke_switch_4 = QtWidgets.QPushButton(combat_window)
+        self.poke_switch_4.setGeometry(QtCore.QRect(600, 370, 300, 120))
+        self.poke_switch_4.setObjectName("Pokemon 4")
+        self.poke_switch_4.hide()
+
+        self.poke_switch_5 = QtWidgets.QPushButton(combat_window)
+        self.poke_switch_5.setGeometry(QtCore.QRect(200, 510, 300, 120))
+        self.poke_switch_5.setObjectName("Pokemon 5")
+        self.poke_switch_5.hide()
+
+        self.poke_switch_6 = QtWidgets.QPushButton(combat_window)
+        self.poke_switch_6.setGeometry(QtCore.QRect(600, 510, 300, 120))
+        self.poke_switch_6.setObjectName("Pokemon 6")
+        self.poke_switch_6.hide()
+
+        self.poke_exit_button = QtWidgets.QPushButton(combat_window)
+        self.poke_exit_button.setGeometry(QtCore.QRect(400, 650, 300, 120))
+        self.poke_exit_button.setObjectName("Retour")
+        self.poke_exit_button.hide()
+
+
         self.retranslateUi(combat_window)
         QtCore.QMetaObject.connectSlotsByName(combat_window)
 
@@ -38,4 +89,21 @@ class Ui_combat_window(object):
         self.run_button.setText(_translate("combat_window", "FUITE"))
         self.bag_button.setText(_translate("combat_window", "SAC"))
         self.pokemon_button.setText(_translate("combat_window", "POKEMON"))
+        self.att_normal_button.setText(_translate("combat_window","NORMALE"))
+        self.att_spe_button.setText(_translate("combat_window", "SPECIALE"))
+        self.att_exit_button.setText(_translate("combat_window", "Retour"))
+        self.poke_switch_1.setText(_translate("combat_window", "Pokemon 1"))
+        self.poke_switch_2.setText(_translate("combat_window", "Pokemon 2"))
+        self.poke_switch_3.setText(_translate("combat_window", "Pokemon 3"))
+        self.poke_switch_4.setText(_translate("combat_window", "Pokemon 4"))
+        self.poke_switch_5.setText(_translate("combat_window", "Pokemon 5"))
+        self.poke_switch_6.setText(_translate("combat_window", "Pokemon 6"))
+        self.poke_exit_button.setText(_translate("combat_window","Retour"))
 
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    combat_window = QtWidgets.QWidget()
+    ui = Ui_combat_window()
+    ui.setupUi(combat_window)
+    combat_window.show()
+    sys.exit(app.exec_())

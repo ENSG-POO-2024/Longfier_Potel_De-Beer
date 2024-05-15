@@ -28,12 +28,14 @@ class Main_window(QWidget):
         self.setObjectName('Pokemon mais en plus gèze')
 
 
+
         #Changement de l'icone de l'app
         self.icon = QIcon('ressources/pokeball_icone.png')
         self.setWindowIcon(self.icon)
 
         #Initialisation du fond
         self.state = 'start_screen'
+        self.time = 'flow'
         self.background = QPixmap('ressources/Background.png').scaledToHeight(self.height())
 
         # Creation de fenêtres annexes
@@ -41,12 +43,15 @@ class Main_window(QWidget):
         self.Ui_combat = combat_window.Ui_combat_window()
         self.Ui_combat.setupUi(self.Ui_combat_window)
 
+        self.Ui_combat.run_button.clicked.connect(self.close_combat)
+
         self.Ui_echap_window = QMainWindow()
         self.Ui_echap = echap_window.Ui_echap_window()
         self.Ui_echap.setupUi(self.Ui_echap_window)
 
         self.Ui_echap.resume_button.clicked.connect(self.close_echap)
         self.Ui_echap.quit_button.clicked.connect(QApplication.quit)
+
 
         #Initialisation de certaines données pour eviter les erreurs
         self.player = joueur.Joueur(self.coord, [],None)
@@ -105,13 +110,15 @@ class Main_window(QWidget):
                     x_cam = x_min_cam + i
                     y_cam = y_min_cam + j
 
-                    if self.global_map[x_cam, y_cam] in Nom_Indices_Pokemon.keys() :
-                        painter.drawPixmap(x_draw, y_draw, QPixmap(mapToSprite['Tall_grass']))
+
 
                     if x_min_draw + (self.cam_size//2) * self.pixel_number == x_draw and y_min_draw + (self.cam_size//2) * self.pixel_number == y_draw :
                         painter.drawPixmap(x_min_draw + (self.cam_size // 2) * self.pixel_number,
-                                           y_min_draw + (self.cam_size // 2) * self.pixel_number,
-                                           QPixmap('ressources/water3.png'))
+                                           y_min_draw + (self.cam_size // 2) * self.pixel_number - 34,
+                                           QPixmap(mapToSprite['Homme_face']))
+
+                    if self.global_map[x_cam, y_cam] in Nom_Indices_Pokemon.keys() :
+                        painter.drawPixmap(x_draw, y_draw + 11, QPixmap(mapToSprite['Tall_grass']))
 
                     if self.global_map[x_cam, y_cam] == 'Tree':
                         painter.drawPixmap(x_draw, y_draw, QPixmap(mapToSprite['Tree']))
@@ -119,16 +126,10 @@ class Main_window(QWidget):
 
 
 
-
-
-
-
-
-
-
     def startScreen(self):
 
         #Initialisation du bouton
+        self.state == 'start_screen'
         self.start_button = QPushButton(text='Start game', parent=self)
         self.start_button.setGeometry(350, 530, 200, 100)
         self.start_button.show()
@@ -158,7 +159,7 @@ class Main_window(QWidget):
             self.open_echap()
 
 
-        if self.state == 'game_screen' :
+        if self.state == 'game_screen' and self.time == 'flow':
             if event.key() == Qt.Key_Q :
                 self.player.depl(np.array([-1,0]))
             if event.key() == Qt.Key_D:
@@ -176,22 +177,34 @@ class Main_window(QWidget):
         bloc = self.global_map[self.coord[0], self.coord[1]]
         if bloc in Nom_Indices_Pokemon.keys():
             if rd.random() < Rarete_Pokemon[bloc] :
-                pass
-                #combat_poke(player.equipe,bloc)
+                self.open_combat()
         pass
 
     def close_echap(self):
+        self.time = 'flow'
         self.Ui_echap_window.hide()
         if self.state == 'combat_screen' :
             self.Ui_combat_window.show()
 
 
     def open_echap(self):
+        self.time = 'paused'
         self.Ui_echap_window.show()
         if self.state == 'combat_screen':
             self.Ui_combat_window.hide()
         else :
             pass
+
+    def open_combat(self):
+        self.time = 'pause'
+        self.Ui_combat_window.show()
+
+
+
+
+    def close_combat(self):
+        self.time = 'flow'
+        self.Ui_combat_window.hide()
 
 if __name__ == '__main__':
 

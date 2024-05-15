@@ -102,7 +102,7 @@ class Combat(Pokemon):
                 return('Finito')
                 
     def attaque(self):
-        
+        pass
 
         
 

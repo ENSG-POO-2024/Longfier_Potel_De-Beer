@@ -42,8 +42,8 @@ data_array[0,2] = 'Coordonnees en Y'
 
 
 tableau_travail = data_array[1:,1:].astype(float)
-tableau_travail[:,0] = np.ceil(tableau_travail[:,0] * 50)
-tableau_travail[:,1] = np.ceil(tableau_travail[:,1] * 50)
+tableau_travail[:,0] = np.ceil(tableau_travail[:,0] * 35)
+tableau_travail[:,1] = np.ceil(tableau_travail[:,1] * 35)
 tableau_travail = tableau_travail.astype(int)
 
 
@@ -108,9 +108,9 @@ def creaMap() :
     for i in range(len(tableau_travail)):
 
         # Génération de hautes herbes aléatoires
-        for j in range(3):
+        for j in range(8):
             if tableau_travail[i, 0] + j < taille_map:
-                for k in range(3):
+                for k in range(8):
                     if tableau_travail[i, 1] + k < taille_map:
                         if rd.random() < 0.5:
                             map[tableau_travail[i, 0] + j, tableau_travail[i, 1] + k] = data_array[i + 1, 0]
@@ -171,7 +171,9 @@ Rarete_Pokemon = {'Bulbasaur' : Taux_rencontre['Starter'], 'Ivysaur' : Taux_renc
 
 mapToSprite = {'0' : 'ressources/ground_grass.png',
                'Tree' : 'ressources/tree2.png',
-               'Tall_grass':'ressources/tall_grass_ground_64.png'}
+               'Tall_grass':'ressources/tall_grass_ground_64.png',
+               'Homme_face' : 'ressources/Perso_masc_face.png'
+               }
 
 
 
@@ -183,7 +185,7 @@ if __name__ == '__main__':
     # plt.plot(tableau_travail[:,0].astype(float),tableau_travail[:,1].astype(float), '+')
     # plt.title('Répartition Pokemon')
     # plt.show()
-#    
+#
 #    plt.figure('Affichage pkmn * 100')
 #    plt.plot(tableau_travail[:,0],tableau_travail[:,1], '+')
 #    plt.title('Répartition Pokemon * 100')
