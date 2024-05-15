@@ -45,7 +45,10 @@ class Pokemon():
         self.defenseSpe =   (((self.IV[4] + 2 * int(self.stats[4]) + (np.floor(EV / 4))) * (level/ 100)) + 5) * self.nature
         self.speed =        (((self.IV[5] + 2 * int(self.stats[5]) + (np.floor(EV / 4))) * (level/ 100)) + 5) * self.nature
         self.pointsdevieTOT = pointsdevie
-        
+        self.attaqueneutre = 40   #Puissance, pas les dégats
+        self.attaquetype1 = 80
+        if self.type2 != 'None':
+            self.attaquetype2 = 80
         
         
     def subir_degats(self, degats):
@@ -63,14 +66,14 @@ class Combat(Pokemon):
     def changement_pokemon(self, changeur):
         self.mainpokemon = changeur
         
-    def pokemon_KO(self):
+    def pokemon_KO_ami(self):
         pkmndispo = []
-        for i in range(len(self.equipe)):
-            if self.equipe[i].pointsdevie != 0:
-                pkmndispo.append(self.equipe[i].nom)
+        for i in range(len(self.equipe1)):
+            if self.equipe1[i].pointsdevie != 0:
+                pkmndispo.append(self.equipe1[i].nom)
         if pkmndispo == []:
             print("Vous n'avez plus de Pokémon en état de se battre. Vous êtes nul !")
-        elif self.mainpokemon.pointsdevie == 0:
+        elif self.mainpokemon1.pointsdevie == 0:
             print("Votre pokémon n'est plus en état de se battre.")
             print("Choisissez un pokémon parmi vos pokemons disponibles : ")
             booleen = False
@@ -79,11 +82,27 @@ class Combat(Pokemon):
                 choix = input('Nom du pokémon choisi : ')
                 if choix == 'stop':
                     booleen = True
-                for i in range(len(self.equipe)):
-                    if str(self.equipe[i].nom) == choix:
-                        self.mainpokemon = self.equipe[i]
+                for i in range(len(self.equipe1)):
+                    if str(self.equipe1[i].nom) == choix:
+                        self.mainpokemon1 = self.equipe1[i]
                         booleen = True
 
+    def pokemon_KO_ennemi(self):
+        pkmndispo = []
+        for i in range(len(self.equipe2)):
+            if self.equipe2[i].pointsdevie != 0:
+                pkmndispo.append(self.equipe2[i].nom)
+        if self.mainpokemon2.pointsdevie == 0:
+            if len(pkmndispo) != 0:
+                for i in range(len(self.equipe2)):
+                    if self.equipe2[i].nom == pkmndispo[0]:
+                        self.mainpokemon2 = self.equipe2[i]
+                        break
+            else:
+                return('Finito')
+                
+    def attaque(self):
+        
 
         
 
@@ -103,4 +122,23 @@ class Combat(Pokemon):
     
     
 if __name__ == '__main__':
-    equipecool = Combat((Pokemon('Charmander'), Pokemon('Squirtle'), Pokemon('Mewtwo')),(Pokemon('Caterpie'), Pokemon('Kakuna'), Pokemon('Articuno')))
+    equipecool = Combat((Pokemon('Charmander'), Pokemon('Squirtle'), Pokemon('Mewtwo')), (Pokemon('Caterpie'), Pokemon('Kakuna'), Pokemon('Articuno')))
+    
+    
+    
+    # # Test pokemon_KO_ami :
+    # equipecool.equipe1[0].pointsdevie = 0
+    # equipecool.pokemon_KO_ami()
+    # print('Nouveau mainpokemon :', equipecool.mainpokemon1.nom)
+    
+    
+    
+    # # Test pokemon_KO_ennemi :
+    # equipecool.mainpokemon2.pointsdevie = 0
+    # equipecool.pokemon_KO_ennemi()
+    # print('Nouveau mainpokemon :', equipecool.mainpokemon2.nom)
+    # equipecool.mainpokemon2.pointsdevie = 0
+    # equipecool.pokemon_KO_ennemi()
+    # print('Nouveau mainpokemon :', equipecool.mainpokemon2.nom)
+    # equipecool.mainpokemon2.pointsdevie = 0
+    # equipecool.pokemon_KO_ennemi()
