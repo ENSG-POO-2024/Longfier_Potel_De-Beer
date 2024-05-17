@@ -15,7 +15,7 @@ import random as rd
 
 '''
 J'ai isolé les coordonnées en X et en Y pour que ce soit + facile
-Dans tableau_travail, les coordonnées sont multipliées par 1000 et arrondies à l'unité
+Dans tableau_travail, les coordonnées sont multipliées par 35 et arrondies à l'unité
 '''
 
 with open('../data/pokemon_coordinates.csv', 'r') as f:
@@ -68,6 +68,8 @@ for i in range(data_stats_array.shape[0]):
     liste_stats_array = np.array( liste_stats , dtype = object )
 liste_stats_array[-1,-1] = 'True'
 
+
+#On utilise un dictionnaire pour associer le nom des pokemons à leur numéro, cela permet de coder avec les noms
 Nom_Indices_Pokemon = {'Bulbasaur' : 1, 'Ivysaur' : 2, 'Venusaur' : 3, 'Charmander' : 4, 'Charmeleon' : 5, 'Charizard' : 6,
                        'Squirtle' : 7, 'Wartortle' : 8, 'Blastoise' : 9, 'Caterpie' : 10, 'Metapod' : 11, 'Butterfree' : 12,
                        'Weedle' : 13, 'Kakuna' : 14, 'Beedrill' : 15, 'Pidgey' : 16, 'Pidgeotto' : 17, 'Pidgeot' : 18,
@@ -143,7 +145,7 @@ def creaMap() :
 Taux_rencontre = {'Common' : 0.87, 'Uncommon' : 1/8, 'Rare' : 1/600, 'Very Rare' : 1/600, 'Extremely Rare' : 1/5000, 'Legendary' : 1, 'Special' : 1/4000, 'Starter' : 1/10000}
 
 '''
-Pour les taux de rareté : ttps://pokemon-planet.fandom.com/wiki/Encounter_Rate
+Pour les taux de rareté : https://pokemon-planet.fandom.com/wiki/Encounter_Rate
 Pour les raretés : https://pokemon-planet.fandom.com/wiki/Pokedex
 J'ai adapté certaines raretés : je suis souvent parti de la rareté du pokémon initial, puis j'ai augmenté d'un stade la rareté par évolution.
 Pour les Pokémons initiaux, j'ai conservé presque toutes les raretés du site, sauf pour certains "Very Rare" que j'ai redescendu en "Rare".
@@ -178,6 +180,9 @@ Rarete_Pokemon = {'Bulbasaur' : Taux_rencontre['Starter'], 'Ivysaur' : Taux_renc
                   'Zapdos' : Taux_rencontre['Legendary'], 'Moltres' : Taux_rencontre['Legendary'], 'Dratini' : Taux_rencontre['Extremely Rare'], 'Dragonair' : Taux_rencontre['Extremely Rare'], 'Dragonite' : Taux_rencontre['Extremely Rare'], 'Mewtwo' : Taux_rencontre['Legendary'],
                   'Mew' : Taux_rencontre['Legendary']}
 
+
+
+#On a implémenté la capture de pokemons, et donc les taux de capture officiels des différents pokemons
 Taux_Capture_Pokemon = {'Bulbasaur' : 45, 'Ivysaur' : 45, 'Venusaur' : 45, 'Charmander' : 45, 'Charmeleon' : 45, 'Charizard' : 45,
                        'Squirtle' : 45, 'Wartortle' : 45, 'Blastoise' : 45, 'Caterpie' : 255, 'Metapod' : 120, 'butterfree' : 45,
                        'Weedle' : 255, 'Kakuna' : 120, 'Beedrill' : 45, 'Pidgey' : 255, 'Pidgeotto' : 120, 'Pidgeot' : 45,
@@ -230,6 +235,6 @@ if __name__ == '__main__':
     # plt.title('Répartition Pokemon')
     # plt.show()
 #
-#    plt.figure('Affichage pkmn * 100')
+#    plt.figure('Affichage pkmn * 35')
 #    plt.plot(tableau_travail[:,0],tableau_travail[:,1], '+')
-#    plt.title('Répartition Pokemon * 100')
+#    plt.title('Répartition Pokemon * 35')
