@@ -21,7 +21,7 @@ class Main_window(QWidget):
         self.pixel_number = 64
         self.taille_map = int(np.max(tableau_travail)) + 1
         self.coord = [rd.randint(int(self.taille_map/3),int(self.taille_map*2/3)), rd.randint(int(self.taille_map/3),int(self.taille_map*2/3))]
-        self.coord = tableau_travail[898]
+        self.coord = tableau_travail[1]
 
 
 
@@ -257,10 +257,11 @@ class Main_window(QWidget):
 
         self.time = 'pause'
         self.Ui_combat_window.show()
-        self.combat = Combat(self.player,equipe_ennemie)
 
         #Initialisation du combat
         self.combat = Combat(self.player,equipe_ennemie)
+        for i in equipe_ennemie :
+            i.pointsdevie = i.pointsdevieTOT
         self.switch_poke_affichage()
 
         #Initialisation du bouton pokemon
@@ -288,6 +289,8 @@ class Main_window(QWidget):
         self.Ui_combat.att_normal_button.pressed.connect(self.attaque_normale)
         self.Ui_combat.att_spe1_button.pressed.connect(self.attaque_spe1)
         self.Ui_combat.att_spe2_button.pressed.connect(self.attaque_spe2)
+        self.Ui_combat.bag_button.pressed.connect(self.pokeball)
+        self.switch_poke_affichage()
 
 
     def switch_poke_1(self):
@@ -452,6 +455,12 @@ class Main_window(QWidget):
         elif resultat == 'poke ko' :
             self.Ui_combat.poke_ko()
 
+    def pokeball(self):
+        if self.combat.capture() == 'capture' :
+            self.close_combat()
+        else :
+            self.attaque_recue()
+
     def close_combat(self):
         """
         Ferme la fenêtre de combat
@@ -464,6 +473,8 @@ class Main_window(QWidget):
         self.Ui_combat.retour_pressed()
         self.time = 'flow'
         self.Ui_combat_window.hide()
+
+
 
 if __name__ == '__main__':
 

@@ -180,6 +180,7 @@ class Combat(Pokemon):
                 self.equipe1.append(self.mainpokemon2)
             else:
                 self.player.pc.append(self.mainpokemon2)
+            return 'capture'
         else:
             booleen = True
             for i in range(3):
@@ -192,7 +193,8 @@ class Combat(Pokemon):
                     self.equipe1.append(self.mainpokemon2)
                 else:
                      self.player.pc.append(self.mainpokemon2)
-    
+                return 'capture'
+
     
     
     
