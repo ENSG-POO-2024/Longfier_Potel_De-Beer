@@ -315,6 +315,7 @@ class Ui_combat_window(object):
         self.poke_nouveau_6.hide()
         self.poke_pc.hide()
         self.change_label.hide()
+        self.ko_label.hide()
 
     def poke_ko(self):
         self.poke_pressed()

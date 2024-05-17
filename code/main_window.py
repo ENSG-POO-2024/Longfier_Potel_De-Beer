@@ -21,7 +21,7 @@ class Main_window(QWidget):
         self.pixel_number = 64
         self.taille_map = int(np.max(tableau_travail)) + 1
         self.coord = [rd.randint(int(self.taille_map/3),int(self.taille_map*2/3)), rd.randint(int(self.taille_map/3),int(self.taille_map*2/3))]
-        self.coord = tableau_travail[1]
+        self.coord = tableau_travail[215]
 
 
 
@@ -379,8 +379,24 @@ class Main_window(QWidget):
         else:
             self.Ui_combat.spe2 = 'False'
 
-        self.pokemon1 = 'ressources/Pokemon_Combat/' + self.combat.mainpokemon1.nom.lower() + "_Dos.png"
-        self.pokemon2 = 'ressources/Pokemon_Combat/' + self.combat.mainpokemon2.nom.lower() + '_Face.png'
+        #Gestion des caractères spéciaux de Nidoran
+        if self.combat.mainpokemon1.nom == 'Nidoranâ™€':
+            self.pokemon1 = 'ressources/Pokemon_Combat/nidoran-f_Dos.png'
+        elif self.combat.mainpokemon1.nom == 'Nidoranâ™‚':
+            self.pokemon1 = 'ressources/Pokemon_Combat/nidoran-m_Dos.png'
+
+        if self.combat.mainpokemon2.nom == 'Nidoranâ™€':
+            self.pokemon2 = 'ressources/Pokemon_Combat/nidoran-f_Face.png'
+        elif self.combat.mainpokemon2.nom == 'Nidoranâ™‚':
+            self.pokemon2 = 'ressources/Pokemon_Combat/nidoran-m_Face.png'
+
+        if self.combat.mainpokemon1.nom != 'Nidoranâ™€' and self.combat.mainpokemon1.nom != 'Nidoranâ™‚' :
+            self.pokemon1 = 'ressources/Pokemon_Combat/' + self.combat.mainpokemon1.nom.lower() + "_Dos.png"
+
+        if self.combat.mainpokemon2.nom != 'Nidoranâ™€' and self.combat.mainpokemon2.nom != 'Nidoranâ™‚':
+            self.pokemon2 = 'ressources/Pokemon_Combat/' + self.combat.mainpokemon2.nom.lower() + '_Face.png'
+
+        print(self.combat.mainpokemon2.nom)
         self.Ui_combat.pokemon1_label.setStyleSheet(
             "QLabel {"
             "background-image: url(" + self.pokemon1 + ");"
