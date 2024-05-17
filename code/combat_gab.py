@@ -13,24 +13,31 @@ from joueur import *
 
 
 def creationIVs():
+    """
+    Création d'une liste comportant les IVs pour chaque statistique d'un pokémon
+
+    Returns
+    -------
+    IV : list
+        Liste de 6 éléments : un entier aléatoire de 0 à 31 pour chacune des statistiques d'un pokémon
+
+    """
     IV = []
     for i in range(6):
         IV.append(rd.randint(0,31))
     return IV
 
 
-
-
-
-
-
-#Je définis EV = 85 parce que le max est 510 donc je répartis 85 par stats, inutile de faire une liste où j'écris 6 fois 85
-#Je définis nature au cas où, cf https://www.pokebip.com/page/general/statistiques
+#Quelques sources (je les mets là car elles servent ici)
 #Pour les dégats : https://www.pokebip.com/page/jeuxvideo/guide_tactique_strategie_pokemon/formules_mathematiques
 #Pour les captures : https://www.pokebip.com/page/jeuxvideo/rbvj/chances_capture
 #Pour les attaque : https://www.pokepedia.fr/Liste_des_capacit%C3%A9s#OA
+
+
 class Pokemon():
     def __init__(self, nom, level = 50, EV = 85, nature = 1):
+        #Je définis EV = 85 parce que le max est 510 donc je répartis 85 par stats, inutile de faire une liste où j'écris 6 fois 85
+        #Je définis nature au cas où, cf https://www.pokebip.com/page/general/statistiques
         self.nom = nom
         self.IV = creationIVs()
         self.EV = EV
@@ -60,11 +67,11 @@ class Pokemon():
 
 class Combat(Pokemon):
     def __init__(self, player, equipe2):
-        self.player = player
         self.equipe1 = player.equipe
         self.mainpokemon1 = player.equipe[0]
         self.equipe2 = equipe2
         self.mainpokemon2 = equipe2[0]
+        self.player = player
 
         self.pkmndispo = []
         for i in player.equipe :
@@ -81,7 +88,7 @@ class Combat(Pokemon):
     def pokemon_KO_ami(self):
         for i in range(len(self.equipe1)):
             if self.equipe1[i].pointsdevie > 0:
-                self.pkmndispo.append(self.equipe1[i].nom)
+                self.pkmndispo.append(self.equipe1[i].nom)  #On regarde quels pokemons sont aptes à combattre
         if self.pkmndispo == []:
             return "perdu"
 
@@ -110,7 +117,7 @@ class Combat(Pokemon):
 
 
     def attaque_degats(self,attaque,poke_att,poke_def):
-        if attaque == 'normale' :
+        if attaque == 'normale' : #On regarde le type de l'attaque
             puiss = poke_att.attaqueneutre
             typ = 'Normal'
 
@@ -126,7 +133,7 @@ class Combat(Pokemon):
         
         T = poke_att.speed//2
         rand = rd.randint(0,255)
-        if T > rand:
+        if T > rand:        #la condition des coups critiques dans les jeux pokemons
             CoupCrit = (2 * self.mainpokemon1.level + 5) / (self.mainpokemon1.level + 5)
         else:
             CoupCrit = 1
@@ -140,11 +147,11 @@ class Combat(Pokemon):
             EffiSurType2 = 1
         EffiType = EffiSurType1 * EffiSurType2   #Si double faiblesse: EffiType = 4
         
-        CM = STAB * CoupCrit * NombreAleatoire * EffiType
+        CM = STAB * CoupCrit * NombreAleatoire * EffiType           #Le coefficient multiplicateur total
 
         degats = np.floor((np.floor(np.floor(np.floor(poke_att.level * 0.4 + 2) * poke_att.attack * puiss / poke_def.defense) / 50) + 2) * CM)
 
-        if poke_att == self.mainpokemon2 :
+        if poke_att == self.mainpokemon2 :   #On regarde quel pokemon attaque
             self.mainpokemon1.subir_degats(degats)
         else :
             self.mainpokemon2.subir_degats(degats)
@@ -153,7 +160,7 @@ class Combat(Pokemon):
 
     def attaque_ennemie(self):
         random = rd.random()
-        if random < 0.5 :
+        if random < 0.5 :    #On considère qu'il y a 1 chance sur 2 qu'un pokémon sauvage utilise son attaque de type1, et 1 chance sur deux qu'il utilise l'autre (la neutre s'il n'a pas de type2)
             if self.mainpokemon2.type2 != 'None' :
                 self.attaque_degats('type2', self.mainpokemon2, self.mainpokemon1)
             else :
@@ -170,17 +177,24 @@ class Combat(Pokemon):
         
 
 
-    def capture(self, Bball = 1.5):   #On considère que l'on utilise toujours des Super Balls donc Bball = 1.5
+    def capture(self, Bball = 1.5):
+        
+        """
+        Gère la capture des pokémons (on ne les capture pas automatiquement à la fin du combat)
+        -----
+        Bball : le bonus d'effet de la pokeball, ici on considère que l'on utilise toujours des Super Balls
+        """
+        
         a = (1 - 2/3 * (self.mainpokemon2.pointsdevie / self.mainpokemon2.pointsdevieTOT)) * Taux_Capture_Pokemon[self.mainpokemon2.nom] * Bball  #On ne prend pas en compte Bstatut (car nous n'avons pas implémenté les statuts^^)
         b = 65535 * (a/255)**(1/4)
-        print(a)
-        print(b)
-        if a >= 255:
+        # print(a)
+        # print(b)
+        if a >= 255:        #Selon les règles des jeux pokémons
             if len(self.equipe1) < 6:
                 self.equipe1.append(self.mainpokemon2)
             else:
                 self.player.pc.append(self.mainpokemon2)
-        else:
+        else:               #De même
             booleen = True
             for i in range(3):
                 if rd.randint(0,65535) > b:
@@ -192,12 +206,6 @@ class Combat(Pokemon):
                     self.equipe1.append(self.mainpokemon2)
                 else:
                      self.player.pc.append(self.mainpokemon2)
-    
-    
-    
-    
-    
-    
     
     
     
