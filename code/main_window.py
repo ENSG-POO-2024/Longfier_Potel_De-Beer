@@ -215,6 +215,8 @@ class Main_window(QWidget):
         if len(self.player.equipe) ==6:
             self.Ui_combat.poke_switch_6.setText(self.player.equipe[5].nom)
 
+        self.switch_poke_affichage()
+
         self.Ui_combat.poke_switch_1.pressed.connect(self.switch_poke_1)
         self.Ui_combat.poke_switch_2.pressed.connect(self.switch_poke_2)
         self.Ui_combat.poke_switch_3.pressed.connect(self.switch_poke_3)
@@ -222,36 +224,31 @@ class Main_window(QWidget):
         self.Ui_combat.poke_switch_5.pressed.connect(self.switch_poke_5)
         self.Ui_combat.poke_switch_6.pressed.connect(self.switch_poke_6)
 
+        self.Ui_combat.att_normal_button.pressed.connect(self.attaque_normale)
+        self.Ui_combat.att_spe1_button.pressed.connect(self.attaque_spe1)
+        self.Ui_combat.att_spe2_button.pressed.connect(self.attaque_spe2)
+
 
     def switch_poke_1(self):
         if self.player.equipe[0].pointsdevie > 0 :
             self.combat.changement_pokemon(self.player.equipe[0])
             self.Ui_combat.retour_pressed()
 
-            if self.combat.mainpokemon1.type2 != 'None':
-                self.Ui_combat.spe2 = 'True'
-            else:
-                self.Ui_combat.spe2 = 'False'
+            self.switch_poke_affichage()
 
     def switch_poke_2(self):
         if self.player.equipe[1].pointsdevie > 0:
             self.combat.changement_pokemon(self.player.equipe[1])
             self.Ui_combat.retour_pressed()
 
-            if self.combat.mainpokemon1.type2 != 'None':
-                self.Ui_combat.spe2 = 'True'
-            else:
-                self.Ui_combat.spe2 = 'False'
+            self.switch_poke_affichage()
 
     def switch_poke_3(self):
         if self.player.equipe[2].pointsdevie > 0:
             self.combat.changement_pokemon(self.player.equipe[2])
             self.Ui_combat.retour_pressed()
 
-            if self.combat.mainpokemon1.type2 != 'None':
-                self.Ui_combat.spe2 = 'True'
-            else:
-                self.Ui_combat.spe2 = 'False'
+            self.switch_poke_affichage()
 
     def switch_poke_4(self):
         if len(self.player.equipe) >= 4:
@@ -259,10 +256,7 @@ class Main_window(QWidget):
                 self.combat.changement_pokemon(self.player.equipe[3])
                 self.Ui_combat.retour_pressed()
 
-                if self.combat.mainpokemon1.type2 != 'None':
-                    self.Ui_combat.spe2 = 'True'
-                else:
-                    self.Ui_combat.spe2 = 'False'
+                self.switch_poke_affichage()
 
     def switch_poke_5(self):
         if len(self.player.equipe) >= 5:
@@ -270,23 +264,34 @@ class Main_window(QWidget):
                 self.combat.changement_pokemon(self.player.equipe[4])
                 self.Ui_combat.retour_pressed()
 
-                if self.combat.mainpokemon1.type2 != 'None':
-                    self.Ui_combat.spe2 = 'True'
-                else:
-                    self.Ui_combat.spe2 = 'False'
+                self.switch_poke_affichage()
 
     def switch_poke_6(self):
-        if len(self.player.equipe) >= 4:
+        if len(self.player.equipe) >= 6:
             if self.player.equipe[5].pointsdevie > 0:
                 self.combat.changement_pokemon(self.player.equipe[5])
                 self.Ui_combat.retour_pressed()
 
-                if self.combat.mainpokemon1.type2 != 'None':
-                    self.Ui_combat.spe2 = 'True'
-                else:
-                    self.Ui_combat.spe2 = 'False'
+                self.switch_poke_affichage()
 
+    def switch_poke_affichage(self):
+        self.Ui_combat.att_spe1_button.setText(self.combat.mainpokemon1.type1.upper())
 
+        if self.combat.mainpokemon1.type2 != 'None':
+            self.Ui_combat.att_spe2_button.setText(self.combat.mainpokemon1.type2.upper())
+            self.Ui_combat.spe2 = 'True'
+
+        else:
+            self.Ui_combat.spe2 = 'False'
+
+    def attaque_normale(self):
+        print('normal')
+
+    def attaque_spe1(self):
+        print('spe1')
+
+    def attaque_spe2(self):
+        print('spe2')
 
     def close_combat(self):
         self.time = 'flow'

@@ -33,6 +33,7 @@ class Pokemon():
         self.nom = nom
         self.IV = creationIVs()
         self.EV = EV
+        self.level = level
         self.nature = nature
         self.type1 = liste_stats_array[Nom_Indices_Pokemon[self.nom]][1]
         self.type2 = liste_stats_array[Nom_Indices_Pokemon[self.nom]][2]
@@ -62,30 +63,30 @@ class Combat(Pokemon):
         self.equipe2 = equipe2
         self.mainpokemon2 = equipe2[0]
 
-        
+        self.pkmndispo = []
+        for i in equipe1 :
+            if i.pointsdevie > 0 :
+                self.pkmndispo.append(i.nom)
+
+
     def changement_pokemon(self, changeur):
         self.mainpokemon1 = changeur
-        
+
     def pokemon_KO_ami(self):
-        pkmndispo = []
         for i in range(len(self.equipe1)):
-            if self.equipe1[i].pointsdevie != 0:
-                pkmndispo.append(self.equipe1[i].nom)
-        if pkmndispo == []:
-            print("Vous n'avez plus de Pokémon en état de se battre. Vous êtes nul !")
+            if self.equipe1[i].pointsdevie > 0:
+                self.pkmndispo.append(self.equipe1[i].nom)
+        if self.pkmndispo == []:
+            return "perdu"
+
         elif self.mainpokemon1.pointsdevie == 0:
-            print("Votre pokémon n'est plus en état de se battre.")
-            print("Choisissez un pokémon parmi vos pokemons disponibles : ")
-            booleen = False
-            while booleen == False:
-                print(pkmndispo)
-                choix = input('Nom du pokémon choisi : ')
-                if choix == 'stop':
-                    booleen = True
-                for i in range(len(self.equipe1)):
-                    if str(self.equipe1[i].nom) == choix:
-                        self.mainpokemon1 = self.equipe1[i]
-                        booleen = True
+            return "poke ko"
+
+        else :
+            return "continu"
+
+
+
 
     def pokemon_KO_ennemi(self):
         pkmndispo = []
@@ -100,9 +101,22 @@ class Combat(Pokemon):
                         break
             else:
                 return('Finito')
-                
-    def attaque(self):
-        pass
+
+    def attaque_allie(self,attaque,poke_att,poke_def):
+
+        if attaque == 'normale' :
+            puiss = poke_att.attaqueneutre
+
+        elif attaque == 'type1' :
+            puiss = poke_att.attaquetype1
+
+        else :
+            puiss = poke_att.attaquetype2
+
+
+
+        degats = (np.floor(np.floor(np.floor(poke_def.level * 0.4 + 2) * poke_def.attack * puiss / poke_def.defense) / 50) + 2) * CM
+        self.mainpokemon2.subir_degats()
 
         
 
