@@ -56,7 +56,6 @@ class Pokemon():
         #degats négatifs = heal
         self.pointsdevie = self.pointsdevie - degats
 
-
 class Combat(Pokemon):
     def __init__(self, equipe1, equipe2):
         self.equipe1 = equipe1
@@ -80,11 +79,11 @@ class Combat(Pokemon):
         if self.pkmndispo == []:
             return "perdu"
 
-        elif self.mainpokemon1.pointsdevie <= 0:
+        elif self.mainpokemon1.pointsdevie == 0:
             return "poke ko"
 
         else :
-            return "continue"
+            return "continu"
 
 
 
@@ -92,10 +91,10 @@ class Combat(Pokemon):
     def pokemon_KO_ennemi(self):
         pkmndispo = []
         for i in range(len(self.equipe2)):
-            if self.equipe2[i].pointsdevie > 0:
+            if self.equipe2[i].pointsdevie != 0:
                 pkmndispo.append(self.equipe2[i].nom)
-        if self.mainpokemon2.pointsdevie <= 0:
-            if len(pkmndispo) == []:
+        if self.mainpokemon2.pointsdevie == 0:
+            if len(pkmndispo) != 0:
                 for i in range(len(self.equipe2)):
                     if self.equipe2[i].nom == pkmndispo[0]:
                         self.mainpokemon2 = self.equipe2[i]
@@ -103,7 +102,8 @@ class Combat(Pokemon):
             else:
                 return('Finito')
 
-    def attaque_degats(self,attaque,poke_att,poke_def):
+    def attaque_allie(self,attaque,poke_att,poke_def):
+
         if attaque == 'normale' :
             puiss = poke_att.attaqueneutre
 
@@ -113,40 +113,20 @@ class Combat(Pokemon):
         else :
             puiss = poke_att.attaquetype2
 
-        CM = 1
 
 
-        degats = np.floor((np.floor(np.floor(np.floor(poke_att.level * 0.4 + 2) * poke_att.attack * puiss / poke_def.defense) / 50) + 2) * CM)
+        degats = (np.floor(np.floor(np.floor(poke_def.level * 0.4 + 2) * poke_def.attack * puiss / poke_def.defense) / 50) + 2) * CM
+        self.mainpokemon2.subir_degats()
 
-        if poke_att == self.mainpokemon2 :
-            self.mainpokemon1.subir_degats(degats)
-        else :
-            self.mainpokemon2.subir_degats(degats)
-
-    def attaque_ennemie(self):
-        random = rd.random()
-        if random < 0.5 :
-            if self.mainpokemon2.type2 != 'None' :
-                self.attaque_degats('type2', self.mainpokemon2, self.mainpokemon1)
-            else :
-                self.attaque_degats('normale', self.mainpokemon2, self.mainpokemon1)
-
-        else :
-            self.attaque_degats('type1', self.mainpokemon2, self.mainpokemon1)
-        return self.pokemon_KO_ami()
-
-    def attaque_alliee(self,attaque):
-        self.attaque_degats(attaque, self.mainpokemon1, self.mainpokemon2)
-        return self.pokemon_KO_ennemi()
         
 
+    def 
     
     
     
     
-    
-    
-    
+Salamèche = Pokemon('Charmander')
+print(Taux_Capture_Pokemon[Salamèche.nom])
     
     
     
@@ -157,8 +137,9 @@ class Combat(Pokemon):
     
 if __name__ == '__main__':
     equipecool = Combat((Pokemon('Charmander'), Pokemon('Squirtle'), Pokemon('Mewtwo')), (Pokemon('Caterpie'), Pokemon('Kakuna'), Pokemon('Articuno')))
-    sala = Pokemon('Charmander')
-
+    
+    
+    
     # # Test pokemon_KO_ami :
     # equipecool.equipe1[0].pointsdevie = 0
     # equipecool.pokemon_KO_ami()
