@@ -179,11 +179,16 @@ Rarete_Pokemon = {'Bulbasaur' : Taux_rencontre['Starter'], 'Ivysaur' : Taux_renc
 
 
 
-mapToSprite = {'0' : 'ressources/ground_grass.png',
-               'Tree' : 'ressources/tree2.png',
-               'Tall_grass':'ressources/tall_grass_ground_64.png',
-               'Homme_face' : 'ressources/Perso_masc_face.png',
-               'Water' : 'ressources/water1.png'
+mapToSprite = {'0' : 'ressources/map/ground_grass.png',
+               'Tree' : 'ressources/map/tree2.png',
+               'Tall_grass':'ressources/map/tall_grass_ground_64.png',
+               'Homme_face' : 'ressources/map/Perso_masc_face.png',
+               'Water' : 'ressources/map/water1.png',
+               'Mew' : 'ressources/map/mew.png',
+               'Mewtwo' : 'ressources/map/mewtwo.png',
+               'Moltres' : 'ressources/map/moltres.png',
+               'Articuno' : 'ressources/map/Articuno.png',
+               'Zapdos' : 'ressources/map/zapdos.png'
                }
 
 

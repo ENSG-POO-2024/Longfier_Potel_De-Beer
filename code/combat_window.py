@@ -14,6 +14,34 @@ class Ui_combat_window(object):
     def setupUi(self, combat_window):
         self.spe2 = 'False'
 
+        self.pokemon1 = ""
+        self.pokemon2 = ""
+
+        self.background_label = QtWidgets.QLabel(combat_window)
+        self.background_label.setGeometry(QtCore.QRect(200, -200, 1100, 834))
+        print(self.pokemon1)
+        self.background_label.setPixmap(QtGui.QPixmap(self.pokemon1))
+
+        self.ground_label = QtWidgets.QLabel(combat_window)
+        self.ground_label.setGeometry(QtCore.QRect(200, -113, 1100, 834))
+        self.ground_label.setPixmap(QtGui.QPixmap("ressources/SolCombat.png"))
+        self.ground_label.setStyleSheet("background-color: transparent;")
+        self.ground_label.raise_()
+
+        self.pokemon1_label = QtWidgets.QLabel(combat_window)
+        self.pokemon1_label.setGeometry(QtCore.QRect(200, -113, 1100, 834))
+        self.pokemon1_label.setPixmap(QtGui.QPixmap(self.pokemon1))
+        self.pokemon1_label.setStyleSheet("background-color: transparent;")
+        self.pokemon1_label.raise_()
+
+        self.pokemon2_label = QtWidgets.QLabel(combat_window)
+        self.pokemon2_label.setGeometry(QtCore.QRect(200, -113, 1100, 834))
+        self.pokemon2_label.setPixmap(QtGui.QPixmap(self.pokemon2))
+        self.pokemon2_label.setStyleSheet("background-color: transparent;")
+        self.pokemon2_label.raise_()
+
+
+
         combat_window.setObjectName("combat_window")
         combat_window.resize(1100, 834)
         self.attack_button = QtWidgets.QPushButton(combat_window)
@@ -115,6 +143,7 @@ class Ui_combat_window(object):
 
 
     def combat_pressed(self):
+        self.retour_pressed()
         self.attack_button.hide()
         self.run_button.hide()
         self.bag_button.hide()
@@ -127,6 +156,7 @@ class Ui_combat_window(object):
             self.att_spe2_button.show()
 
     def poke_pressed(self):
+        self.retour_pressed()
         self.attack_button.hide()
         self.run_button.hide()
         self.bag_button.hide()
@@ -156,6 +186,10 @@ class Ui_combat_window(object):
         self.poke_switch_4.hide()
         self.poke_switch_5.hide()
         self.poke_switch_6.hide()
+        self.poke_exit_button.hide()
+
+    def poke_ko(self):
+        self.poke_pressed()
         self.poke_exit_button.hide()
 
     def closeEvent(self,event) :

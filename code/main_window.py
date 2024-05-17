@@ -9,6 +9,7 @@ import random as rd
 import numpy as np
 import echap_window
 import combat_window
+import time
 
 
 
@@ -21,12 +22,25 @@ class Main_window(QWidget):
         self.pixel_number = 64
         self.taille_map = int(np.max(tableau_travail)) + 1
         self.coord = [rd.randint(int(self.taille_map/3),int(self.taille_map*2/3)), rd.randint(int(self.taille_map/3),int(self.taille_map*2/3))]
-        self.coord = tableau_travail[231]
+        self.coord = tableau_travail[898]
+
+
 
         #Création de la fenêtre principale
         self.setGeometry(300, 100, 900, 900)
         self.setObjectName('Pokemon mais en plus gèze')
 
+        self.game_over = QLabel(self)
+        self.game_over.setGeometry(300, 400, 300, 100)
+        self.game_over.setText("Game Over")
+        self.game_over.setObjectName("game_over")
+        self.setStyleSheet("""
+            QLabel#game_over{
+                font-size: 50px;
+                font-weight: bold;
+            }
+            """)
+        self.game_over.hide()
 
 
         #Changement de l'icone de l'app
@@ -52,7 +66,6 @@ class Main_window(QWidget):
 
         self.Ui_echap.resume_button.clicked.connect(self.close_echap)
         self.Ui_echap.quit_button.clicked.connect(QApplication.quit)
-
 
         #Initialisation de certaines données pour eviter les erreurs
         self.player = joueur.Joueur(self.coord, [],None)
@@ -125,8 +138,16 @@ class Main_window(QWidget):
                         if liste_stats_array[Nom_Indices_Pokemon[bloc],-1] == 'False':
                             painter.drawPixmap(x_draw, y_draw + 11, QPixmap(mapToSprite['Tall_grass']))
                         else:
-                            painter.drawPixmap(x_draw,y_draw,QPixmap(mapToSprite['Water']))
-
+                            if bloc == 'Mew' :
+                                painter.drawPixmap(x_draw + 13,y_draw,QPixmap(mapToSprite[bloc]))
+                            elif bloc == 'Moltres' :
+                                painter.drawPixmap(x_draw - 40, y_draw - 7, QPixmap(mapToSprite[bloc]))
+                            elif bloc == 'Articuno':
+                                painter.drawPixmap(x_draw - 27, y_draw, QPixmap(mapToSprite[bloc]))
+                            elif bloc == 'Zapdos':
+                                painter.drawPixmap(x_draw - 9, y_draw - 20, QPixmap(mapToSprite[bloc]))
+                            else :
+                                painter.drawPixmap(x_draw + 10, y_draw, QPixmap(mapToSprite[bloc]))
 
 
                     if bloc == 'Tree':
@@ -185,7 +206,7 @@ class Main_window(QWidget):
         bloc = self.global_map[self.coord[0], self.coord[1]]
         if bloc in Nom_Indices_Pokemon.keys():
             if rd.random() < Rarete_Pokemon[bloc] :
-                self.open_combat([bloc])
+                self.open_combat([Pokemon(bloc)])
         pass
 
     def close_echap(self):
@@ -284,16 +305,46 @@ class Main_window(QWidget):
         else:
             self.Ui_combat.spe2 = 'False'
 
+        self.Ui_combat.pokemon1 = '/ressources/Pokemon_Combat/' + self.combat.mainpokemon1.nom.lower() + "_Dos.png"
+        self.Ui_combat.pokemon2 = '/ressources/Pokemon_Combat/' + self.combat.mainpokemon2.nom.lower()
+        self.update()
     def attaque_normale(self):
-        print('normal')
+        resultat = self.combat.attaque_alliee('normale')
+        if resultat == 'Finito' :
+            self.close_combat()
+        self.attaque_recue()
 
     def attaque_spe1(self):
-        print('spe1')
+        resultat = self.combat.attaque_alliee('type1')
+        if resultat == 'Finito' :
+            self.close_combat()
+        self.attaque_recue()
 
     def attaque_spe2(self):
-        print('spe2')
+        resultat = self.combat.attaque_alliee('type2')
+        if resultat == 'Finito' :
+            self.close_combat()
+        self.attaque_recue()
+    def attaque_recue(self):
+        resultat = self.combat.attaque_ennemie()
+        if resultat == "perdu" :
+            self.close_combat()
+            self.game_over.show()
+            self.game_over.raise_()
+            self.state = 'start_screen'
+            self.update()
+            self.start_button.show()
+
+
+        elif resultat == 'poke ko' :
+            self.Ui_combat.poke_ko()
 
     def close_combat(self):
+        #Regeneration des pv des pokemons
+        for i in self.player.equipe :
+            i.pointsdevie = i.pointsdevieTOT
+
+        self.Ui_combat.retour_pressed()
         self.time = 'flow'
         self.Ui_combat_window.hide()
 
