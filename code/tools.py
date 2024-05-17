@@ -130,7 +130,7 @@ def creaMap() :
     #Génération de blocs durs
     for i in range(taille_map):
         for j in range(taille_map - 1):
-            if rd.random() < 0.08 and map[i,j + 1] == '0.0':
+            if rd.random() < 0.08 and map[i,j + 1] == '0.0' and map[i,j] == '0.0':
                 map[i,j] = 'Tree'
 
 

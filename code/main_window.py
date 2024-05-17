@@ -317,31 +317,44 @@ class Main_window(QWidget):
         self.Ui_combat.pokemon2_label.setStyleSheet(
             "QLabel {"
             "background-image: url(" + self.pokemon2 + ");"
-                                                       "background-repeat: no-repeat"
-                                                       "}"
+            "background-repeat: no-repeat"
+            "}"
         )
 
 
 
     def attaque_normale(self):
         resultat = self.combat.attaque_alliee('normale')
+        pv_pourc = self.combat.mainpokemon2.pointsdevie / self.combat.mainpokemon2.pointsdevieTOT
+        print(int(200 * pv_pourc))
+        self.Ui_combat.pv_ennemie.setGeometry((QRect(800, 460, int(200 * pv_pourc), 10)))
+
         if resultat == 'Finito' :
             self.close_combat()
         self.attaque_recue()
 
     def attaque_spe1(self):
         resultat = self.combat.attaque_alliee('type1')
+        pv_pourc = self.combat.mainpokemon2.pointsdevie / self.combat.mainpokemon2.pointsdevieTOT
+        self.Ui_combat.pv_ennemie.setGeometry(QRect(800, 460, int(200 * pv_pourc), 10))
+
         if resultat == 'Finito' :
             self.close_combat()
         self.attaque_recue()
 
     def attaque_spe2(self):
         resultat = self.combat.attaque_alliee('type2')
+        pv_pourc = self.combat.mainpokemon2.pointsdevie / self.combat.mainpokemon2.pointsdevieTOT
+        self.Ui_combat.pv_ennemie.setGeometry(QRect(800, 460, int(200 * pv_pourc), 10))
+
         if resultat == 'Finito' :
             self.close_combat()
         self.attaque_recue()
     def attaque_recue(self):
         resultat = self.combat.attaque_ennemie()
+        pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+        self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200*pv_pourc), 10))
         if resultat == "perdu" :
             self.close_combat()
             self.game_over.show()
