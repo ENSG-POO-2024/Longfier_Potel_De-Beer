@@ -305,9 +305,24 @@ class Main_window(QWidget):
         else:
             self.Ui_combat.spe2 = 'False'
 
-        self.Ui_combat.pokemon1 = '/ressources/Pokemon_Combat/' + self.combat.mainpokemon1.nom.lower() + "_Dos.png"
-        self.Ui_combat.pokemon2 = '/ressources/Pokemon_Combat/' + self.combat.mainpokemon2.nom.lower()
-        self.update()
+        self.pokemon1 = 'ressources/Pokemon_Combat/' + self.combat.mainpokemon1.nom.lower() + "_Dos.png"
+        self.pokemon2 = 'ressources/Pokemon_Combat/' + self.combat.mainpokemon2.nom.lower() + '_Face.png'
+        self.Ui_combat.pokemon1_label.setStyleSheet(
+            "QLabel {"
+            "background-image: url(" + self.pokemon1 + ");"
+            "background-repeat: no-repeat"
+            "}"
+        )
+
+        self.Ui_combat.pokemon2_label.setStyleSheet(
+            "QLabel {"
+            "background-image: url(" + self.pokemon2 + ");"
+                                                       "background-repeat: no-repeat"
+                                                       "}"
+        )
+
+
+
     def attaque_normale(self):
         resultat = self.combat.attaque_alliee('normale')
         if resultat == 'Finito' :
@@ -343,6 +358,7 @@ class Main_window(QWidget):
         #Regeneration des pv des pokemons
         for i in self.player.equipe :
             i.pointsdevie = i.pointsdevieTOT
+        self.player.equipe = self.combat.equipe1
 
         self.Ui_combat.retour_pressed()
         self.time = 'flow'

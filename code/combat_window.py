@@ -16,11 +16,11 @@ class Ui_combat_window(object):
 
         self.pokemon1 = ""
         self.pokemon2 = ""
+        print(self.pokemon1)
 
         self.background_label = QtWidgets.QLabel(combat_window)
         self.background_label.setGeometry(QtCore.QRect(200, -200, 1100, 834))
-        print(self.pokemon1)
-        self.background_label.setPixmap(QtGui.QPixmap(self.pokemon1))
+        self.background_label.setPixmap(QtGui.QPixmap("ressources/FondCombat.png"))
 
         self.ground_label = QtWidgets.QLabel(combat_window)
         self.ground_label.setGeometry(QtCore.QRect(200, -113, 1100, 834))
@@ -29,14 +29,12 @@ class Ui_combat_window(object):
         self.ground_label.raise_()
 
         self.pokemon1_label = QtWidgets.QLabel(combat_window)
-        self.pokemon1_label.setGeometry(QtCore.QRect(200, -113, 1100, 834))
-        self.pokemon1_label.setPixmap(QtGui.QPixmap(self.pokemon1))
+        self.pokemon1_label.setGeometry(QtCore.QRect(240, 242, 1100, 834))
         self.pokemon1_label.setStyleSheet("background-color: transparent;")
         self.pokemon1_label.raise_()
 
         self.pokemon2_label = QtWidgets.QLabel(combat_window)
         self.pokemon2_label.setGeometry(QtCore.QRect(200, -113, 1100, 834))
-        self.pokemon2_label.setPixmap(QtGui.QPixmap(self.pokemon2))
         self.pokemon2_label.setStyleSheet("background-color: transparent;")
         self.pokemon2_label.raise_()
 
