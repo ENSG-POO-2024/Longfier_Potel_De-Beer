@@ -257,6 +257,7 @@ class Main_window(QWidget):
 
         self.time = 'pause'
         self.Ui_combat_window.show()
+        self.combat = Combat(self.player.equipe,equipe_ennemie)
 
         #Initialisation du combat
         self.combat = Combat(self.player,equipe_ennemie)
