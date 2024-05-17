@@ -111,6 +111,7 @@ def creaMap() :
     map = np.zeros([taille_map, taille_map]).astype(str)
 
     for i in range(len(tableau_travail)):
+
         # Génération de hautes herbes aléatoires pour les pokémons non légendaires
         if liste_stats_array[Nom_Indices_Pokemon[data_array[i + 1, 0]], -1] == 'False' :
             for j in range(8):
@@ -178,35 +179,9 @@ Rarete_Pokemon = {'Bulbasaur' : Taux_rencontre['Starter'], 'Ivysaur' : Taux_renc
                   'Mew' : Taux_rencontre['Legendary']}
 
 
-Taux_Capture_Pokemon = {'Bulbasaur' : 45, 'Ivysaur' : 45, 'Venusaur' : 45, 'Charmander' : 45, 'Charmeleon' : 45, 'Charizard' : 45,
-                       'Squirtle' : 45, 'Wartortle' : 45, 'Blastoise' : 45, 'Caterpie' : 255, 'Metapod' : 120, 'butterfree' : 45,
-                       'Weedle' : 255, 'Kakuna' : 120, 'Beedrill' : 45, 'Pidgey' : 255, 'Pidgeotto' : 120, 'Pidgeot' : 45,
-                       'Rattata' : 255, 'Raticate' : 127, 'Spearow' : 255, 'Fearow' : 90, 'Ekans' : 255, 'Arbok' : 90,
-                       'Pikachu' : 190, 'Raichu' : 75, 'Sandshrew' : 255, 'Sandslash' : 90, 'Nidoranâ™€' : 235, 'Nidorina' : 120,
-                       'Nidoqueen' : 45, 'Nidoranâ™,' : 255, 'Nidorino' : 120, 'Nidoking' : 45, 'Clefairy' : 150, 'Clefable' : 25,
-                       'Vulpix' : 190, 'Ninetales' : 75, 'Jigglypuff' : 170, 'Wigglytuff' : 50, 'Zubat' : 255, 'Golbat' : 90,
-                       'Oddish' : 255, 'Gloom' : 120, 'Vileplume' : 45, 'Paras' : 190, 'Parasect' : 75, 'Venonat' : 190,
-                       'Venomoth' : 75, 'Diglett' : 255, 'Dugtrio' : 50, 'Meowth' : 255, 'Persian' : 90, 'Psyduck' : 190,
-                       'Golduck' : 75, 'Mankey' : 190, 'Primeape' : 75, 'Growlithe' : 190, 'Arcanine' : 75, 'Poliwag' : 255,
-                       'Poliwhirl' : 120, 'Poliwrath' : 45, 'Abra' : 200, 'Kadabra' : 100, 'Alakazam' : 50, 'Machop' : 180,
-                       'Machoke' : 90, 'Machamp' : 45, 'Bellsprout' : 255, 'Weepinbell' : 120, 'Victreebel' : 45, 'Tentacool' :  190,
-                       'Tentacruel' : 60, 'Geodude' : 255, 'Graveler' : 120, 'Golem' : 45, 'Ponyta' : 190, 'Rapidash' : 60,
-                       'Slowpoke' : 190, 'Slowbro' : 75, 'Magnemite' : 190, 'Magneton' : 60, "Farfetch'd" : 45, 'Doduo' : 190,
-                       'Dodrio' : 45, 'Seel' : 190, 'Dewdong' : 75, 'Grimer' : 190, 'Muk' : 75, 'Shellder' : 190,
-                       'Cloyster' : 60, 'Gastly' : 190, 'Haunter' : 90, 'Gengar' : 45, 'Onix' : 45, 'Drowzee' : 190,
-                       'Hypno' : 75, 'Krabby' : 225, 'Kingler' : 60, 'Voltorb' : 190, 'Electrode' : 60, 'Exeggcute' : 90,
-                       'Exeggutor' : 45, 'Cubone' : 190, 'Marowak' : 75, 'Hitmonlee' : 45, 'Hitmonchan' : 45, 'Lickitung' : 45,
-                       'Koffing' : 190, 'Weezing' : 60, 'Rhyhorn' : 120, 'Rhydon' : 60, 'Chansey' : 30, 'Tangela' : 45,
-                       'Kangaskhan' : 45, 'Horsea' : 225, 'Seadra' : 75, 'Goldeen' : 225, 'Seaking' : 60, 'Staryu' : 225,
-                       'Starmie' : 60, 'Mr. Mime' : 45, 'Scyther' : 45, 'Jynx' : 45, 'Electabuzz' : 45, 'Magmar' : 45,
-                       'Pinsir' : 45, 'Tauros' : 45, 'Magikarp' : 255, 'Gyarados' : 45, 'Lapras' : 45, 'Ditto' : 35,
-                       'Eevee' : 45, 'Vaporeon' : 45, 'Jolteon' : 45, 'Flareon' : 45, 'Porygon' : 45, 'Omanyte' : 45,
-                       'Omastar' : 45, 'Kabuto' : 45, 'Kabutops' : 45, 'Aerodactyl' : 45, 'Snorlax' : 25, 'Articuno' : 3,
-                       'Zapdos' : 3, 'Moltres' : 3, 'Dratini' : 45, 'Dragonair' : 45, 'Dragonite' : 45, 'Mewtwo' : 3,
-                       'Mew' : 45}
-
 
 mapToSprite = {'0' : 'ressources/map/ground_grass.png',
+               '0.1': 'ressources/map/ground_other.png',
                'Tree' : 'ressources/map/tree2.png',
                'Tall_grass':'ressources/map/tall_grass_ground_64.png',
                'Homme_face' : 'ressources/map/Perso_masc_face.png',

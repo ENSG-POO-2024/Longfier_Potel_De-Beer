@@ -39,14 +39,25 @@ class Ui_combat_window(object):
         self.pokemon2_label.raise_()
 
         self.pokemon1_nom_label = QtWidgets.QLabel(combat_window)
-        self.pokemon1_nom_label.setGeometry(QtCore.QRect(640, 70, 1100, 834))
-        self.pokemon1_nom_label.setStyleSheet("background-color: transparent;")
+        self.pokemon1_nom_label.setGeometry(QtCore.QRect(100, 20, 1100, 834))
+        self.pokemon1_nom_label.setStyleSheet(
+            "QLabel {"
+            "background-color: transparent;"
+            "color: black"
+            ""
+        )
         self.pokemon1_nom_label.raise_()
 
         self.pokemon2_nom_label = QtWidgets.QLabel(combat_window)
-        self.pokemon2_nom_label.setGeometry(QtCore.QRect(640, 70, 1100, 834))
-        self.pokemon2_nom_label.setStyleSheet("background-color: transparent;")
+        self.pokemon2_nom_label.setGeometry(QtCore.QRect(800, 20, 1100, 834))
+        self.pokemon2_nom_label.setStyleSheet(
+            "QLabel {"
+            "background-color: transparent;"
+            "color: black"
+            ""
+        )
         self.pokemon2_nom_label.raise_()
+
 
         self.pv_allie_background = QtWidgets.QLabel(combat_window)
         self.pv_allie_background.setGeometry((QtCore.QRect(100,460,200,10)))

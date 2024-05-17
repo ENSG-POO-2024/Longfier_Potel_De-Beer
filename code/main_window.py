@@ -9,7 +9,6 @@ import random as rd
 import numpy as np
 import echap_window
 import combat_window
-import time
 
 
 
@@ -17,7 +16,7 @@ class Main_window(QWidget):
     def __init__(self):
         super().__init__()
 
-
+        #Initialisation de la position
         self.cam_size = 14
         self.pixel_number = 64
         self.taille_map = int(np.max(tableau_travail)) + 1
@@ -30,6 +29,7 @@ class Main_window(QWidget):
         self.setGeometry(300, 100, 900, 900)
         self.setObjectName('Pokemon mais en plus gèze')
 
+        #Label en cas de game over
         self.game_over = QLabel(self)
         self.game_over.setGeometry(300, 400, 300, 100)
         self.game_over.setText("Game Over")
@@ -72,11 +72,16 @@ class Main_window(QWidget):
         self.global_map = []
         self.combat = None
 
-
         #Démarrage
         self.startScreen()
 
     def paintEvent(self, event):
+        '''
+        Se déclenche à chaque update de pyqt5 (possibilité de l'activer manuellement avec self.update())
+        Dessine la page principale: -Ecran d'acceuil
+                                    -Ecran du jeu sur la carte
+        '''
+
         if self.state == 'start_screen':
 
             painter = QPainter(self)
@@ -125,14 +130,14 @@ class Main_window(QWidget):
                     y_cam = y_min_cam + j
 
 
-
+                    #Dessin du personnage
                     if x_min_draw + (self.cam_size//2) * self.pixel_number == x_draw and y_min_draw + (self.cam_size//2) * self.pixel_number == y_draw :
                         painter.drawPixmap(x_min_draw + (self.cam_size // 2) * self.pixel_number,
                                            y_min_draw + (self.cam_size // 2) * self.pixel_number - 34,
                                            QPixmap(mapToSprite['Homme_face']))
-                        print(self.global_map[x_cam,y_cam])
                     bloc = self.global_map[x_cam, y_cam]
 
+                    #Dessin des hautes herbes ou des pokemons légendaires
                     if bloc in Nom_Indices_Pokemon.keys():
                         if liste_stats_array[Nom_Indices_Pokemon[bloc],-1] == 'False':
                             painter.drawPixmap(x_draw, y_draw + 11, QPixmap(mapToSprite['Tall_grass']))
@@ -148,7 +153,7 @@ class Main_window(QWidget):
                             else :
                                 painter.drawPixmap(x_draw + 10, y_draw, QPixmap(mapToSprite[bloc]))
 
-
+                    #Dessin des arbres
                     if bloc == 'Tree':
                         painter.drawPixmap(x_draw, y_draw, QPixmap(mapToSprite['Tree']))
 
@@ -156,6 +161,9 @@ class Main_window(QWidget):
 
 
     def startScreen(self):
+        """
+        Ecran d'acceuil
+        """
 
         #Initialisation du bouton
         self.state == 'start_screen'
@@ -173,8 +181,14 @@ class Main_window(QWidget):
         )
 
     def start_game(self):
+        '''
+        Initialisation du jeu sur la carte
+        '''
+
         equipe = [Pokemon('Bulbasaur'), Pokemon('Charmander'), Pokemon('Squirtle')]
         self.start_button.hide()
+
+        #Creation de la carte
         self.global_map = creaMap()
         self.player.map = self.global_map
         self.player.equipe = equipe
@@ -183,10 +197,17 @@ class Main_window(QWidget):
 
 
     def keyPressEvent(self, event):
+        """
+        Fonction automatique de PyQt, se déclenche quand on appuie sur une touche
+        :param event:
+        :return:
+        """
+
+        #Menu echap
         if event.key() == Qt.Key_Escape:
             self.open_echap()
 
-
+        #Déplacement du personnage
         if self.state == 'game_screen' and self.time == 'flow':
             if event.key() == Qt.Key_Q :
                 self.player.depl(np.array([-1,0]))
@@ -202,6 +223,9 @@ class Main_window(QWidget):
 
 
     def check_poke(self):
+        """
+        On regarde si on est sur une herbe haute, et on defini si un combat doit commencer ou non
+        """
         bloc = self.global_map[self.coord[0], self.coord[1]]
         if bloc in Nom_Indices_Pokemon.keys():
             if rd.random() < Rarete_Pokemon[bloc] :
@@ -209,20 +233,36 @@ class Main_window(QWidget):
         pass
 
     def close_echap(self):
+        """
+        Fonction pour fermer le jeu
+        """
+        #Parametre qui permet au joueur de laisser se déplacer
         self.time = 'flow'
         self.Ui_echap_window.hide()
 
 
     def open_echap(self):
+        """
+        Ouvre la fenêtre echap
+        """
+        #Paramètre qui permet au joueur de bloquer ses déplacements
         self.time = 'paused'
         self.Ui_echap_window.show()
 
     def open_combat(self,equipe_ennemie):
+        """
+        Ouvre la fenêtre de combat
+        :param equipe_ennemie: Equipe ennemie contre laquelle on combat (potentiellement un npc avec plusieurs pokémons
+        """
+
         self.time = 'pause'
         self.Ui_combat_window.show()
-        self.combat = Combat(self.player.equipe,equipe_ennemie)
-        print(Type(self.combat))
 
+        #Initialisation du combat
+        self.combat = Combat(self.player,equipe_ennemie)
+        self.switch_poke_affichage()
+
+        #Initialisation du bouton pokemon
         self.Ui_combat.poke_switch_1.setText(self.player.equipe[0].nom)
         self.Ui_combat.poke_switch_2.setText(self.player.equipe[1].nom)
         self.Ui_combat.poke_switch_3.setText(self.player.equipe[2].nom)
@@ -236,8 +276,7 @@ class Main_window(QWidget):
         if len(self.player.equipe) ==6:
             self.Ui_combat.poke_switch_6.setText(self.player.equipe[5].nom)
 
-        self.switch_poke_affichage()
-
+        #Connection des boutons
         self.Ui_combat.poke_switch_1.pressed.connect(self.switch_poke_1)
         self.Ui_combat.poke_switch_2.pressed.connect(self.switch_poke_2)
         self.Ui_combat.poke_switch_3.pressed.connect(self.switch_poke_3)
@@ -251,18 +290,30 @@ class Main_window(QWidget):
 
 
     def switch_poke_1(self):
+        """
+        Change le pokemon avec le 1er pokemon
+        """
         if self.player.equipe[0].pointsdevie > 0 :
             self.combat.changement_pokemon(self.player.equipe[0])
             self.Ui_combat.retour_pressed()
 
             self.switch_poke_affichage()
+            pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+            self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200 * pv_pourc), 10))
 
     def switch_poke_2(self):
+        """
+        Pareil avec le pokemon 2 ...
+        """
         if self.player.equipe[1].pointsdevie > 0:
             self.combat.changement_pokemon(self.player.equipe[1])
             self.Ui_combat.retour_pressed()
 
             self.switch_poke_affichage()
+            pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+            self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200 * pv_pourc), 10))
 
     def switch_poke_3(self):
         if self.player.equipe[2].pointsdevie > 0:
@@ -270,6 +321,9 @@ class Main_window(QWidget):
             self.Ui_combat.retour_pressed()
 
             self.switch_poke_affichage()
+            pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+            self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200 * pv_pourc), 10))
 
     def switch_poke_4(self):
         if len(self.player.equipe) >= 4:
@@ -278,6 +332,9 @@ class Main_window(QWidget):
                 self.Ui_combat.retour_pressed()
 
                 self.switch_poke_affichage()
+                pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+                self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200 * pv_pourc), 10))
 
     def switch_poke_5(self):
         if len(self.player.equipe) >= 5:
@@ -286,6 +343,9 @@ class Main_window(QWidget):
                 self.Ui_combat.retour_pressed()
 
                 self.switch_poke_affichage()
+                pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+                self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200 * pv_pourc), 10))
 
     def switch_poke_6(self):
         if len(self.player.equipe) >= 6:
@@ -294,9 +354,18 @@ class Main_window(QWidget):
                 self.Ui_combat.retour_pressed()
 
                 self.switch_poke_affichage()
+                pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+                self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200 * pv_pourc), 10))
 
     def switch_poke_affichage(self):
+        """
+        Mise a jour de l'affichage de la page de combat
+        """
         self.Ui_combat.att_spe1_button.setText(self.combat.mainpokemon1.type1.upper())
+
+        self.Ui_combat.pokemon1_nom_label.setText(self.combat.mainpokemon1.nom + "           PV :")
+        self.Ui_combat.pokemon2_nom_label.setText(self.combat.mainpokemon2.nom + "           PV :")
 
         if self.combat.mainpokemon1.type2 != 'None':
             self.Ui_combat.att_spe2_button.setText(self.combat.mainpokemon1.type2.upper())
@@ -317,32 +386,60 @@ class Main_window(QWidget):
         self.Ui_combat.pokemon2_label.setStyleSheet(
             "QLabel {"
             "background-image: url(" + self.pokemon2 + ");"
-                                                       "background-repeat: no-repeat"
-                                                       "}"
+            "background-repeat: no-repeat"
+            "}"
         )
 
 
 
     def attaque_normale(self):
+        """
+        Déclenche une attaque de type normale
+        """
         resultat = self.combat.attaque_alliee('normale')
+        pv_pourc = self.combat.mainpokemon2.pointsdevie / self.combat.mainpokemon2.pointsdevieTOT
+        self.Ui_combat.pv_ennemie.setGeometry((QRect(800, 460, int(200 * pv_pourc), 10)))
+
         if resultat == 'Finito' :
             self.close_combat()
         self.attaque_recue()
 
     def attaque_spe1(self):
+        """
+        Déclenche une attaque du 1er type du pokémon
+        """
         resultat = self.combat.attaque_alliee('type1')
+        pv_pourc = self.combat.mainpokemon2.pointsdevie / self.combat.mainpokemon2.pointsdevieTOT
+        self.Ui_combat.pv_ennemie.setGeometry(QRect(800, 460, int(200 * pv_pourc), 10))
+
         if resultat == 'Finito' :
             self.close_combat()
         self.attaque_recue()
 
     def attaque_spe2(self):
+        """
+        Déclenche une attaque du 2eme type du pokémon
+        """
         resultat = self.combat.attaque_alliee('type2')
+        pv_pourc = self.combat.mainpokemon2.pointsdevie / self.combat.mainpokemon2.pointsdevieTOT
+        self.Ui_combat.pv_ennemie.setGeometry(QRect(800, 460, int(200 * pv_pourc), 10))
+
         if resultat == 'Finito' :
             self.close_combat()
         self.attaque_recue()
+
     def attaque_recue(self):
+        '''
+        Attaque venant de l'adversaire
+        '''
         resultat = self.combat.attaque_ennemie()
+        pv_pourc = self.combat.mainpokemon1.pointsdevie / self.combat.mainpokemon1.pointsdevieTOT
+
+        self.Ui_combat.pv_allie.setGeometry(QRect(100, 460, int(200*pv_pourc), 10))
+        self.switch_poke_affichage()
+
         if resultat == "perdu" :
+            #Game over
             self.close_combat()
             self.game_over.show()
             self.game_over.raise_()
@@ -355,6 +452,9 @@ class Main_window(QWidget):
             self.Ui_combat.poke_ko()
 
     def close_combat(self):
+        """
+        Ferme la fenêtre de combat
+        """
         #Regeneration des pv des pokemons
         for i in self.player.equipe :
             i.pointsdevie = i.pointsdevieTOT
