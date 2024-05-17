@@ -73,7 +73,6 @@ class Main_window(QWidget):
         self.combat = None
 
 
-
         #Démarrage
         self.startScreen()
 
