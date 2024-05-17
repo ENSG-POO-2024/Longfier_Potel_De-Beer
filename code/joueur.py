@@ -2,9 +2,9 @@ from math import sqrt
 import numpy as np
 from tools import *
 
-dict_types = {'Acier' : 0, 'Combat' : 1, 'Dragon' : 2, 'Eau' : 3, 'Electrik' : 4, 'Feu' : 5, 'Fée' : 6, 'Glace' : 7, 'Insecte' : 8, 
-             'Normal' : 9, 'Plante' : 10, 'Poison' : 11, 'Psy' : 12, 'Roche' : 13, 'Sol' : 14, 'Spectre' : 15, 'Ténèbre' : 16, 
-             'Vol' : 17}
+dict_types = {'Steel' : 0, 'Fighting' : 1, 'Dragon' : 2, 'Water' : 3, 'Electric' : 4, 'Fire' : 5, 'Fairy' : 6, 'Ice' : 7, 'Bug' : 8, 
+             'Normal' : 9, 'Grass' : 10, 'Poison' : 11, 'Psychic' : 12, 'Rock' : 13, 'Ground' : 14, 'Ghost' : 15, 'Dark' : 16, 
+             'Flying' : 17}
 
 table_affin = np.array(([0.5, 1, 1, 0.5, 0.5, 0.5, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
                        [2, 1, 1, 1, 1, 1, 0.5, 2, 0.5, 2, 1, 0.5, 0.5, 2, 1, 0, 2, 0.5],
@@ -51,6 +51,7 @@ class Joueur:
         self.coord = coord
         self.equipe = equipe
         self.map = map
+        self.pc = []
         
     def depl(self, direct):
         new_coord = self.coord + direct
@@ -61,7 +62,8 @@ class Joueur:
     def change_equipe(self,equipe):
         self.equipe = equipe
 
-
+    def changement_equipe_pc(self):
+        pass
 
 if __name__ == '__main__' :
     pass
