@@ -2,11 +2,11 @@ from math import sqrt
 import numpy as np
 from tools import *
 
-dict_typs = {'Acier' : 1, 'Combat' : 2, 'Dragon' : 3, 'Eau' : 4, 'Electrik' : 5, 'Feu' : 6, 'Fée' : 7, 'Glace' : 8, 'Insecte' : 9, 
-             'Normal' : 10, 'Plante' : 11, 'Poison' : 12, 'Psy' : 13, 'Roche' : 14, 'Sol' : 15, 'Spectre' : 16, 'Ténèbre' : 17, 
-             'Vol' : 18}
+dict_types = {'Acier' : 0, 'Combat' : 1, 'Dragon' : 2, 'Eau' : 3, 'Electrik' : 4, 'Feu' : 5, 'Fée' : 6, 'Glace' : 7, 'Insecte' : 8, 
+             'Normal' : 9, 'Plante' : 10, 'Poison' : 11, 'Psy' : 12, 'Roche' : 13, 'Sol' : 14, 'Spectre' : 15, 'Ténèbre' : 16, 
+             'Vol' : 17}
 
-tabl_affin = np.array(([0.5, 1, 1, 0.5, 0.5, 0.5, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
+table_affin = np.array(([0.5, 1, 1, 0.5, 0.5, 0.5, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1],
                        [2, 1, 1, 1, 1, 1, 0.5, 2, 0.5, 2, 1, 0.5, 0.5, 2, 1, 0, 2, 0.5],
                        [0.5, 1, 2, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
                        [1, 1, 0.5, 0.5, 1, 2, 1, 1, 1, 1, 0.5, 1, 1, 2, 2, 1, 1, 1],
@@ -26,6 +26,8 @@ tabl_affin = np.array(([0.5, 1, 1, 0.5, 0.5, 0.5, 2, 2, 1, 1, 1, 1, 1, 2, 1, 1, 
                        [0.5, 2, 1, 1, 0.5, 1, 1, 1, 2, 1, 2, 1, 1, 0.5, 1, 1, 1, 1]))
 
 def dist(p1, p2):
+    """
+    """
     return sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
     
 class PokemonSauvage:
