@@ -38,45 +38,6 @@ class Ui_combat_window(object):
         self.pokemon2_label.setStyleSheet("background-color: transparent;")
         self.pokemon2_label.raise_()
 
-        self.pokemon1_nom_label =
-
-        self.pv_allie_background = QtWidgets.QLabel(combat_window)
-        self.pv_allie_background.setGeometry((QtCore.QRect(100,460,200,10)))
-        self.pv_allie_background.setStyleSheet(
-            "QLabel {"
-            "background-color: black;"
-            "color: black;"
-            "}"
-        )
-
-        self.pv_allie = QtWidgets.QLabel(combat_window)
-        self.pv_allie.setGeometry((QtCore.QRect(100, 460, 200, 10)))
-        self.pv_allie.setStyleSheet(
-            "QLabel {"
-            "background-color: green;"
-            "color: green;"
-            "}"
-        )
-
-
-
-        self.pv_ennemie_background = QtWidgets.QLabel(combat_window)
-        self.pv_ennemie_background.setGeometry((QtCore.QRect(800, 460, 200, 10)))
-        self.pv_ennemie_background.setStyleSheet(
-            "QLabel {"
-            "background-color: black;"
-            "color: black;"
-            "}"
-        )
-
-        self.pv_ennemie = QtWidgets.QLabel(combat_window)
-        self.pv_ennemie.setGeometry((QtCore.QRect(800, 460, 200, 10)))
-        self.pv_ennemie.setStyleSheet(
-            "QLabel {"
-            "background-color: green;"
-            "color: green;"
-            "}"
-        )
 
 
         combat_window.setObjectName("combat_window")
@@ -95,22 +56,22 @@ class Ui_combat_window(object):
         self.pokemon_button.setObjectName("pokemon_button")
 
         self.att_normal_button = QtWidgets.QPushButton(combat_window)
-        self.att_normal_button.setGeometry(QtCore.QRect(200, 560, 300, 120))
+        self.att_normal_button.setGeometry(QtCore.QRect(200, 510, 300, 120))
         self.att_normal_button.setObjectName("Attaque normal bouton")
         self.att_normal_button.hide()
 
         self.att_spe1_button = QtWidgets.QPushButton(combat_window)
-        self.att_spe1_button.setGeometry(QtCore.QRect(600, 560, 300, 120))
+        self.att_spe1_button.setGeometry(QtCore.QRect(600, 510, 300, 120))
         self.att_spe1_button.setObjectName("Attaque spéciale bouton")
         self.att_spe1_button.hide()
 
         self.att_spe2_button = QtWidgets.QPushButton(combat_window)
-        self.att_spe2_button.setGeometry(QtCore.QRect(400, 420, 300, 120))
+        self.att_spe2_button.setGeometry(QtCore.QRect(400, 370, 300, 120))
         self.att_spe2_button.setObjectName("Attaque spéciale bouton")
         self.att_spe2_button.hide()
 
         self.att_exit_button = QtWidgets.QPushButton(combat_window)
-        self.att_exit_button.setGeometry(QtCore.QRect(400, 700, 300, 120))
+        self.att_exit_button.setGeometry(QtCore.QRect(400, 650, 300, 120))
         self.att_exit_button.setObjectName("Retour")
         self.att_exit_button.hide()
 

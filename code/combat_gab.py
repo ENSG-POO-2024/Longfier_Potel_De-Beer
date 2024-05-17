@@ -9,6 +9,7 @@ Created on Mon May  6 09:30:36 2024
 import numpy as np
 import random as rd
 from tools import *
+from joueur import *
 
 
 def creationIVs():
@@ -58,20 +59,24 @@ class Pokemon():
 
 
 class Combat(Pokemon):
-    def __init__(self, equipe1, equipe2):
-        self.equipe1 = equipe1
-        self.mainpokemon1 = equipe1[0]
+    def __init__(self, player, equipe2):
+        self.player = player
+        self.equipe1 = player.equipe
+        self.mainpokemon1 = player.equipe[0]
         self.equipe2 = equipe2
         self.mainpokemon2 = equipe2[0]
 
         self.pkmndispo = []
-        for i in equipe1 :
+        for i in player.equipe :
             if i.pointsdevie > 0 :
                 self.pkmndispo.append(i.nom)
 
 
+
     def changement_pokemon(self, changeur):
         self.mainpokemon1 = changeur
+
+
 
     def pokemon_KO_ami(self):
         for i in range(len(self.equipe1)):
@@ -85,7 +90,6 @@ class Combat(Pokemon):
 
         else :
             return "continue"
-
 
 
 
@@ -103,18 +107,40 @@ class Combat(Pokemon):
             else:
                 return('Finito')
 
+
+
     def attaque_degats(self,attaque,poke_att,poke_def):
         if attaque == 'normale' :
             puiss = poke_att.attaqueneutre
+            typ = 'Normal'
 
         elif attaque == 'type1' :
             puiss = poke_att.attaquetype1
-
+            typ = poke_att.type1
+            
         else :
             puiss = poke_att.attaquetype2
+            typ = poke_att.type2
 
-        CM = 1
-
+        STAB = 1.5 #Quand un pokémon fait une attaque de son type, il bénéficie des dégats * 1.5. Ici nous n'avons pas de cas où ça n'arrive pas
+        
+        T = poke_att.speed//2
+        rand = rd.randint(0,255)
+        if T > rand:
+            CoupCrit = (2 * self.mainpokemon1.level + 5) / (self.mainpokemon1.level + 5)
+        else:
+            CoupCrit = 1
+        
+        NombreAleatoire = rd.randint(85,100)/100        #Nb random entre 0.85 et 1
+        
+        EffiSurType1 = table_affin[dict_types[typ],dict_types[poke_def.type1]]
+        if poke_def.type2 != 'None':
+            EffiSurType2 = table_affin[dict_types[typ],dict_types[poke_def.type2]]
+        else:
+            EffiSurType2 = 1
+        EffiType = EffiSurType1 * EffiSurType2   #Si double faiblesse: EffiType = 4
+        
+        CM = STAB * CoupCrit * NombreAleatoire * EffiType
 
         degats = np.floor((np.floor(np.floor(np.floor(poke_att.level * 0.4 + 2) * poke_att.attack * puiss / poke_def.defense) / 50) + 2) * CM)
 
@@ -123,6 +149,8 @@ class Combat(Pokemon):
         else :
             self.mainpokemon2.subir_degats(degats)
 
+
+
     def attaque_ennemie(self):
         random = rd.random()
         if random < 0.5 :
@@ -130,17 +158,40 @@ class Combat(Pokemon):
                 self.attaque_degats('type2', self.mainpokemon2, self.mainpokemon1)
             else :
                 self.attaque_degats('normale', self.mainpokemon2, self.mainpokemon1)
-
         else :
             self.attaque_degats('type1', self.mainpokemon2, self.mainpokemon1)
         return self.pokemon_KO_ami()
+
+
 
     def attaque_alliee(self,attaque):
         self.attaque_degats(attaque, self.mainpokemon1, self.mainpokemon2)
         return self.pokemon_KO_ennemi()
         
 
-    
+
+    def capture(self, Bball = 1.5):   #On considère que l'on utilise toujours des Super Balls donc Bball = 1.5
+        a = (1 - 2/3 * (self.mainpokemon2.pointsdevie / self.mainpokemon2.pointsdevieTOT)) * Taux_Capture_Pokemon[self.mainpokemon2.nom] * Bball  #On ne prend pas en compte Bstatut (car nous n'avons pas implémenté les statuts^^)
+        b = 65535 * (a/255)**(1/4)
+        print(a)
+        print(b)
+        if a >= 255:
+            if len(self.equipe1) < 6:
+                self.equipe1.append(self.mainpokemon2)
+            else:
+                self.player.pc.append(self.mainpokemon2)
+        else:
+            booleen = True
+            for i in range(3):
+                if rd.randint(0,65535) > b:
+                    booleen = False
+            if not booleen:
+                return 'rate'
+            else:
+                if len(self.equipe1) < 6:
+                    self.equipe1.append(self.mainpokemon2)
+                else:
+                     self.player.pc.append(self.mainpokemon2)
     
     
     
@@ -156,7 +207,7 @@ class Combat(Pokemon):
     
     
 if __name__ == '__main__':
-    equipecool = Combat((Pokemon('Charmander'), Pokemon('Squirtle'), Pokemon('Mewtwo')), (Pokemon('Caterpie'), Pokemon('Kakuna'), Pokemon('Articuno')))
+    equipecool = Combat(Joueur((0,0),[Pokemon('Charmander'),Pokemon('Squirtle'),Pokemon('Zapdos')],[]), [Pokemon('Caterpie'), Pokemon('Kakuna'), Pokemon('Articuno')])
     sala = Pokemon('Charmander')
 
     # # Test pokemon_KO_ami :
