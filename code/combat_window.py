@@ -168,6 +168,64 @@ class Ui_combat_window(object):
         self.poke_exit_button.setObjectName("Retour")
         self.poke_exit_button.hide()
 
+        self.ko_label = QtWidgets.QLabel(combat_window)
+        self.ko_label.setGeometry(QtCore.QRect(425, 150, 700, 120))
+        self.ko_label.setText("Votre pokémon est KO !")
+        self.ko_label.setStyleSheet(
+            "QLabel {"
+            "backrground-color: white;"
+            "font-size: 20px;"
+            "font-weight: bold;"
+            "}"
+        )
+        self.ko_label.hide()
+
+        self.poke_nouveau_1 = QtWidgets.QPushButton(combat_window)
+        self.poke_nouveau_1.setGeometry(QtCore.QRect(200, 230, 300, 120))
+        self.poke_nouveau_1.setObjectName("Nouveau Pokemon 1")
+        self.poke_nouveau_1.hide()
+
+        self.poke_nouveau_2 = QtWidgets.QPushButton(combat_window)
+        self.poke_nouveau_2.setGeometry(QtCore.QRect(600, 230, 300, 120))
+        self.poke_nouveau_2.setObjectName("Pokemon 2")
+        self.poke_nouveau_2.hide()
+
+        self.poke_nouveau_3 = QtWidgets.QPushButton(combat_window)
+        self.poke_nouveau_3.setGeometry(QtCore.QRect(200, 370, 300, 120))
+        self.poke_nouveau_3.setObjectName("Pokemon 3")
+        self.poke_nouveau_3.hide()
+
+        self.poke_nouveau_4 = QtWidgets.QPushButton(combat_window)
+        self.poke_nouveau_4.setGeometry(QtCore.QRect(600, 370, 300, 120))
+        self.poke_nouveau_4.setObjectName("Pokemon 4")
+        self.poke_nouveau_4.hide()
+
+        self.poke_nouveau_5 = QtWidgets.QPushButton(combat_window)
+        self.poke_nouveau_5.setGeometry(QtCore.QRect(200, 510, 300, 120))
+        self.poke_nouveau_5.setObjectName("Pokemon 5")
+        self.poke_nouveau_5.hide()
+
+        self.poke_nouveau_6 = QtWidgets.QPushButton(combat_window)
+        self.poke_nouveau_6.setGeometry(QtCore.QRect(600, 510, 300, 120))
+        self.poke_nouveau_6.setObjectName("Pokemon 6")
+        self.poke_nouveau_6.hide()
+
+        self.poke_pc = QtWidgets.QPushButton(combat_window)
+        self.poke_pc.setGeometry(QtCore.QRect(400, 650, 300, 120))
+        self.poke_pc.setObjectName("Retour")
+        self.poke_pc.hide()
+
+        self.change_label = QtWidgets.QLabel(combat_window)
+        self.change_label.setGeometry(QtCore.QRect(220, 150, 700, 120))
+        self.change_label.setStyleSheet(
+            "QLabel {"
+            "backrground-color: white;"
+            "font-size: 20px;"
+            "font-weight: bold;"
+            "}"
+        )
+        self.change_label.hide()
+
 
         self.attack_button.pressed.connect(self.combat_pressed)
         self.att_exit_button.pressed.connect(self.retour_pressed)
@@ -196,7 +254,13 @@ class Ui_combat_window(object):
         self.poke_switch_5.setText(_translate("combat_window", "Pokemon 5"))
         self.poke_switch_6.setText(_translate("combat_window", "Pokemon 6"))
         self.poke_exit_button.setText(_translate("combat_window","Retour"))
-
+        self.poke_nouveau_1.setText(_translate("combat_window", 'Pokemon 1'))
+        self.poke_nouveau_2.setText(_translate("combat_window", "Pokemon 2"))
+        self.poke_nouveau_3.setText(_translate("combat_window", "Pokemon 3"))
+        self.poke_nouveau_4.setText(_translate("combat_window", "Pokemon 4"))
+        self.poke_nouveau_5.setText(_translate("combat_window", "Pokemon 5"))
+        self.poke_nouveau_6.setText(_translate("combat_window", "Pokemon 6"))
+        self.poke_pc.setText(_translate("combat_window", "PC"))
 
     def combat_pressed(self):
         self.retour_pressed()
@@ -243,14 +307,46 @@ class Ui_combat_window(object):
         self.poke_switch_5.hide()
         self.poke_switch_6.hide()
         self.poke_exit_button.hide()
+        self.poke_nouveau_1.hide()
+        self.poke_nouveau_2.hide()
+        self.poke_nouveau_3.hide()
+        self.poke_nouveau_4.hide()
+        self.poke_nouveau_5.hide()
+        self.poke_nouveau_6.hide()
+        self.poke_pc.hide()
+        self.change_label.hide()
 
     def poke_ko(self):
         self.poke_pressed()
+        self.ko_label.show()
         self.poke_exit_button.hide()
 
-    def closeEvent(self,event) :
-        print("fermée")
-        event.ignore()
+    def nouveau_poke(self):
+        self.attack_button.hide()
+        self.run_button.hide()
+        self.bag_button.hide()
+        self.pokemon_button.hide()
+        self.att_normal_button.hide()
+        self.att_spe1_button.hide()
+        self.att_spe2_button.hide()
+        self.att_exit_button.hide()
+        self.poke_switch_1.hide()
+        self.poke_switch_2.hide()
+        self.poke_switch_3.hide()
+        self.poke_switch_4.hide()
+        self.poke_switch_5.hide()
+        self.poke_switch_6.hide()
+        self.poke_exit_button.hide()
+
+        self.poke_nouveau_1.show()
+        self.poke_nouveau_2.show()
+        self.poke_nouveau_3.show()
+        self.poke_nouveau_4.show()
+        self.poke_nouveau_5.show()
+        self.poke_nouveau_6.show()
+        self.poke_pc.show()
+        self.change_label.show()
+
 
 
 

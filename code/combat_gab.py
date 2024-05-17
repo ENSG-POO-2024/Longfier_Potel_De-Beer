@@ -190,10 +190,12 @@ class Combat(Pokemon):
         # print(a)
         # print(b)
         if a >= 255:        #Selon les règles des jeux pokémons
+            '''
             if len(self.equipe1) < 6:
                 self.equipe1.append(self.mainpokemon2)
             else:
                 self.player.pc.append(self.mainpokemon2)
+            '''
             return 'capture'
         else:               #De même
             booleen = True
@@ -203,10 +205,10 @@ class Combat(Pokemon):
             if not booleen:
                 return 'rate'
             else:
-                if len(self.equipe1) < 6:
+                '''if len(self.equipe1) < 6:
                     self.equipe1.append(self.mainpokemon2)
                 else:
-                     self.player.pc.append(self.mainpokemon2)
+                     self.player.pc.append(self.mainpokemon2)'''
                 return 'capture'
 
     

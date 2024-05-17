@@ -168,7 +168,7 @@ class Main_window(QWidget):
         #Initialisation du bouton
         self.state == 'start_screen'
         self.start_button = QPushButton(text='Start game', parent=self)
-        self.start_button.setGeometry(350, 530, 200, 100)
+        self.start_button.setGeometry(300, 530, 300, 100)
         self.start_button.show()
         self.start_button.clicked.connect(self.start_game)
         self.start_button.setStyleSheet(
@@ -263,6 +263,7 @@ class Main_window(QWidget):
         for i in equipe_ennemie :
             i.pointsdevie = i.pointsdevieTOT
         self.switch_poke_affichage()
+        self.Ui_combat.retour_pressed()
 
         #Initialisation du bouton pokemon
         self.Ui_combat.poke_switch_1.setText(self.player.equipe[0].nom)
@@ -271,12 +272,12 @@ class Main_window(QWidget):
 
         #Début avec 3 pokémons
         if len(self.player.equipe) >= 4:
-            print(self.player.equipe[3].nom)
             self.Ui_combat.poke_switch_4.setText(self.player.equipe[3].nom)
         if len(self.player.equipe) >= 5:
             self.Ui_combat.poke_switch_5.setText(self.player.equipe[4].nom)
         if len(self.player.equipe) ==6:
             self.Ui_combat.poke_switch_6.setText(self.player.equipe[5].nom)
+
 
         #Connection des boutons
         self.Ui_combat.poke_switch_1.pressed.connect(self.switch_poke_1)
@@ -457,9 +458,85 @@ class Main_window(QWidget):
 
     def pokeball(self):
         if self.combat.capture() == 'capture' :
-            self.close_combat()
+            self.choix_pokemon()
         else :
             self.attaque_recue()
+
+    def choix_pokemon(self):
+        if len(self.player.equipe) < 6 :
+            self.player.equipe.append(self.combat.mainpokemon2)
+            self.close_combat()
+
+        else :
+            self.Ui_combat.poke_nouveau_1.setText(self.player.equipe[0].nom)
+            self.Ui_combat.poke_nouveau_2.setText(self.player.equipe[1].nom)
+            self.Ui_combat.poke_nouveau_3.setText(self.player.equipe[2].nom)
+
+            if len(self.player.equipe) >= 4:
+                self.Ui_combat.poke_nouveau_4.setText(self.player.equipe[3].nom)
+            if len(self.player.equipe) >= 5:
+                self.Ui_combat.poke_nouveau_5.setText(self.player.equipe[4].nom)
+            if len(self.player.equipe) == 6:
+                self.Ui_combat.poke_nouveau_6.setText(self.player.equipe[5].nom)
+
+            self.Ui_combat.nouveau_poke()
+            self.Ui_combat.poke_nouveau_1.pressed.connect(self.remplace_1)
+            self.Ui_combat.poke_nouveau_2.pressed.connect(self.remplace_2)
+            self.Ui_combat.poke_nouveau_3.pressed.connect(self.remplace_3)
+            self.Ui_combat.poke_nouveau_4.pressed.connect(self.remplace_4)
+            self.Ui_combat.poke_nouveau_5.pressed.connect(self.remplace_5)
+            self.Ui_combat.poke_nouveau_6.pressed.connect(self.remplace_6)
+            self.Ui_combat.poke_pc.pressed.connect(self.poke_pc)
+            self.Ui_combat.change_label.setText("Avec quel pokémon voulez vous échanger " + self.combat.mainpokemon2.nom + " ?")
+            self.Ui_combat.change_label.show()
+
+
+    def remplace_1(self):
+        self.player.equipe[0] = self.combat.mainpokemon2
+        self.Ui_combat.retour_pressed()
+        self.close_combat()
+
+    def remplace_2(self):
+        self.player.equipe[1] = self.combat.mainpokemon2
+        self.Ui_combat.retour_pressed()
+        self.close_combat()
+
+    def remplace_3(self):
+        self.player.equipe[2] = self.combat.mainpokemon2
+        self.Ui_combat.retour_pressed()
+        self.close_combat()
+
+    def remplace_4(self):
+        self.player.equipe[3] = self.combat.mainpokemon2
+        self.Ui_combat.retour_pressed()
+        self.close_combat()
+
+    def remplace_5(self):
+        self.player.equipe[4] = self.combat.mainpokemon2
+        self.Ui_combat.retour_pressed()
+        self.close_combat()
+
+    def remplace_6(self):
+        self.player.equipe[5] = self.combat.mainpokemon2
+        self.Ui_combat.retour_pressed()
+        self.close_combat()
+
+    def poke_pc(self):
+        self.player.pc.append(self.combat.mainpokemon2)
+        self.Ui_combat.retour_pressed()
+        self.close_combat()
+
+
+
+
+
+
+
+
+
+
+
+
 
     def close_combat(self):
         """
